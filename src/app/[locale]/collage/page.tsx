@@ -5,12 +5,9 @@ import CollageContainer from '@/components/CollageContainer';
 import type { GridSize } from '@/lib/lastfm';
 import { Locale, locales, getMessages } from '@/lib/i18n';
 
-
 export const revalidate = 3600; 
 
-
-const allowedTypes = ['artists', 'albums'];
-
+const allowedTypes = ['albums'];
 
 const isValidGridSize = (gridSize: string): gridSize is GridSize => {
   return ['3x3', '4x4', '5x5', '10x10'].includes(gridSize);

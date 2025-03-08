@@ -53,6 +53,7 @@ export default function CollageContainer({
   const [showDownloadModal, setShowDownloadModal] = useState(false);
   const [showTitles, setShowTitles] = useState(true);
   const [showPlayCount, setShowPlayCount] = useState(true);
+  const [showStyles, setShowStyles] = useState(true);
 
   useEffect(() => {
     setMounted(true);
@@ -100,62 +101,72 @@ export default function CollageContainer({
       document.body.appendChild(exportWrapper);
       
       const exportContainer = document.createElement('div');
-      exportContainer.style.width = '1200px';
-      exportContainer.style.padding = '40px';
-      exportContainer.style.backgroundColor = document.documentElement.classList.contains('dark') 
-        ? '#111827' 
-        : '#f8fafc';
-      exportContainer.style.borderRadius = '16px';
-      exportContainer.style.overflow = 'hidden';
-      exportContainer.style.position = 'relative';
       
-      const gradientOverlay = document.createElement('div');
-      gradientOverlay.style.position = 'absolute';
-      gradientOverlay.style.top = '0';
-      gradientOverlay.style.left = '0';
-      gradientOverlay.style.width = '100%';
-      gradientOverlay.style.height = '100%';
-      gradientOverlay.style.opacity = '0.08';
-      gradientOverlay.style.background = document.documentElement.classList.contains('dark')
-        ? 'radial-gradient(circle at top right, rgba(124, 58, 237, 0.5), transparent 70%), radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.5), transparent 70%)'
-        : 'radial-gradient(circle at top right, rgba(124, 58, 237, 0.3), transparent 70%), radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.3), transparent 70%)';
-      exportContainer.appendChild(gradientOverlay);
-      
-      const headerDiv = document.createElement('div');
-      headerDiv.style.marginBottom = '30px';
-      headerDiv.style.textAlign = 'center';
-      headerDiv.style.position = 'relative';
-      headerDiv.style.zIndex = '1';
-      
-      // Create title container for flexbox layout
-      const titleContainer = document.createElement('div');
-      titleContainer.style.display = 'flex';
-      titleContainer.style.alignItems = 'center';
-      titleContainer.style.justifyContent = 'center';
-      titleContainer.style.gap = '8px';
-      titleContainer.style.marginBottom = '8px';
-      
-      const title = document.createElement('h1');
-      title.textContent = t('collage.title', { 
-        username: collageData.username, 
-        type: t(`collage.top${type === 'artists' ? 'Artists' : 'Albums'}`)
-      });
-      title.style.fontSize = '36px';
-      title.style.fontWeight = 'bold';
-      title.style.color = document.documentElement.classList.contains('dark') 
-        ? '#6366f1'
-        : '#4f46e5';
-      
-      titleContainer.appendChild(title);
-      headerDiv.appendChild(titleContainer);
-      
-      const subtitle = document.createElement('p');
-      subtitle.textContent = `${t(`form.period.options.${period as keyof typeof PERIODS}`)}`;
-      subtitle.style.fontSize = '16px';
-      subtitle.style.color = document.documentElement.classList.contains('dark') ? '#d1d5db' : '#4b5563';
-      headerDiv.appendChild(subtitle);
-      
-      exportContainer.appendChild(headerDiv);
+      if (showStyles) {
+        // Set styling for regular collage with styling
+        exportContainer.style.width = '1200px';
+        exportContainer.style.padding = '40px';
+        exportContainer.style.backgroundColor = document.documentElement.classList.contains('dark') 
+          ? '#111827' 
+          : '#f8fafc';
+        exportContainer.style.borderRadius = '16px';
+        exportContainer.style.overflow = 'hidden';
+        exportContainer.style.position = 'relative';
+        
+        const gradientOverlay = document.createElement('div');
+        gradientOverlay.style.position = 'absolute';
+        gradientOverlay.style.top = '0';
+        gradientOverlay.style.left = '0';
+        gradientOverlay.style.width = '100%';
+        gradientOverlay.style.height = '100%';
+        gradientOverlay.style.opacity = '0.08';
+        gradientOverlay.style.background = document.documentElement.classList.contains('dark')
+          ? 'radial-gradient(circle at top right, rgba(124, 58, 237, 0.5), transparent 70%), radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.5), transparent 70%)'
+          : 'radial-gradient(circle at top right, rgba(124, 58, 237, 0.3), transparent 70%), radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.3), transparent 70%)';
+        exportContainer.appendChild(gradientOverlay);
+        
+        const headerDiv = document.createElement('div');
+        headerDiv.style.marginBottom = '30px';
+        headerDiv.style.textAlign = 'center';
+        headerDiv.style.position = 'relative';
+        headerDiv.style.zIndex = '1';
+        
+        // Create title container for flexbox layout
+        const titleContainer = document.createElement('div');
+        titleContainer.style.display = 'flex';
+        titleContainer.style.alignItems = 'center';
+        titleContainer.style.justifyContent = 'center';
+        titleContainer.style.gap = '8px';
+        titleContainer.style.marginBottom = '8px';
+        
+        const title = document.createElement('h1');
+        title.textContent = t('collage.title', { 
+          username: collageData.username, 
+          type: t(`collage.top${type === 'artists' ? 'Artists' : 'Albums'}`)
+        });
+        title.style.fontSize = '36px';
+        title.style.fontWeight = 'bold';
+        title.style.color = document.documentElement.classList.contains('dark') 
+          ? '#6366f1'
+          : '#4f46e5';
+        
+        titleContainer.appendChild(title);
+        headerDiv.appendChild(titleContainer);
+        
+        const subtitle = document.createElement('p');
+        subtitle.textContent = `${t(`form.period.options.${period as keyof typeof PERIODS}`)}`;
+        subtitle.style.fontSize = '16px';
+        subtitle.style.color = document.documentElement.classList.contains('dark') ? '#d1d5db' : '#4b5563';
+        headerDiv.appendChild(subtitle);
+        
+        exportContainer.appendChild(headerDiv);
+      } else {
+        // Simple container for pure collage
+        exportContainer.style.width = showStyles ? '1200px' : '1200px';
+        exportContainer.style.padding = '0';
+        exportContainer.style.overflow = 'hidden';
+        exportContainer.style.position = 'relative';
+      }
       
       const gridDiv = document.createElement('div');
       gridDiv.style.display = 'grid';
@@ -164,14 +175,16 @@ export default function CollageContainer({
       gridDiv.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
       gridDiv.style.gap = '0';
       
-      gridDiv.style.border = document.documentElement.classList.contains('dark')
-        ? '1px solid rgba(255, 255, 255, 0.1)'
-        : '1px solid rgba(0, 0, 0, 0.1)';
-      gridDiv.style.borderRadius = '12px';
-      gridDiv.style.overflow = 'hidden';
-      gridDiv.style.boxShadow = document.documentElement.classList.contains('dark')
-        ? '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2)'
-        : '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+      if (showStyles) {
+        gridDiv.style.border = document.documentElement.classList.contains('dark')
+          ? '1px solid rgba(255, 255, 255, 0.1)'
+          : '1px solid rgba(0, 0, 0, 0.1)';
+        gridDiv.style.borderRadius = '12px';
+        gridDiv.style.overflow = 'hidden';
+        gridDiv.style.boxShadow = document.documentElement.classList.contains('dark')
+          ? '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2)'
+          : '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+      }
       
       collageData.items.forEach((item) => {
         const itemContainer = document.createElement('div');
@@ -267,48 +280,50 @@ export default function CollageContainer({
       
       exportContainer.appendChild(gridDiv);
       
-      const footer = document.createElement('div');
-      footer.style.marginTop = '25px';
-      footer.style.textAlign = 'center';
-      footer.style.fontSize = '14px';
-      footer.style.color = document.documentElement.classList.contains('dark') ? '#9ca3af' : '#6b7280';
-      footer.style.position = 'relative';
-      footer.style.zIndex = '1';
-      
-      const footerText = document.createElement('p');
-      footerText.textContent = `${t('common.generatedWith')} `;
-      
-      // Create SVG logo element
-      const footerSvgLogo = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      footerSvgLogo.setAttribute('viewBox', '0 0 48 34');
-      footerSvgLogo.setAttribute('width', '16');
-      footerSvgLogo.setAttribute('height', '16');
-      footerSvgLogo.style.display = 'inline-block';
-      footerSvgLogo.style.verticalAlign = 'middle';
-      footerSvgLogo.style.marginRight = '4px';
-      
-      const footerLogoGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      footerLogoGroup.setAttribute('transform', 'translate(0, 0.5)');
-      
-      const footerPath1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      footerPath1.setAttribute('d', 'M16.0573 0H37.1389L21.6397 22.9729H0.558105L16.0573 0Z');
-      footerPath1.setAttribute('fill', '#6366F1');
-      
-      const footerPath2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      footerPath2.setAttribute('d', 'M16.9805 25.102L10.9773 34H33.0589L48.5581 11.0271H32.2605L22.7645 25.102H16.9805Z');
-      footerPath2.setAttribute('fill', '#8B5CF6');
-      
-      footerLogoGroup.appendChild(footerPath1);
-      footerLogoGroup.appendChild(footerPath2);
-      footerSvgLogo.appendChild(footerLogoGroup);
-      
-      footerText.appendChild(footerSvgLogo);
-      
-      const textNode = document.createTextNode(` Collage.fm • ${dateString}`);
-      footerText.appendChild(textNode);
-      
-      footer.appendChild(footerText);
-      exportContainer.appendChild(footer);
+      if (showStyles) {
+        const footer = document.createElement('div');
+        footer.style.marginTop = '25px';
+        footer.style.textAlign = 'center';
+        footer.style.fontSize = '14px';
+        footer.style.color = document.documentElement.classList.contains('dark') ? '#9ca3af' : '#6b7280';
+        footer.style.position = 'relative';
+        footer.style.zIndex = '1';
+        
+        const footerText = document.createElement('p');
+        footerText.textContent = `${t('common.generatedWith')} `;
+        
+        // Create SVG logo element
+        const footerSvgLogo = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        footerSvgLogo.setAttribute('viewBox', '0 0 48 34');
+        footerSvgLogo.setAttribute('width', '16');
+        footerSvgLogo.setAttribute('height', '16');
+        footerSvgLogo.style.display = 'inline-block';
+        footerSvgLogo.style.verticalAlign = 'middle';
+        footerSvgLogo.style.marginRight = '4px';
+        
+        const footerLogoGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        footerLogoGroup.setAttribute('transform', 'translate(0, 0.5)');
+        
+        const footerPath1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        footerPath1.setAttribute('d', 'M16.0573 0H37.1389L21.6397 22.9729H0.558105L16.0573 0Z');
+        footerPath1.setAttribute('fill', '#6366F1');
+        
+        const footerPath2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        footerPath2.setAttribute('d', 'M16.9805 25.102L10.9773 34H33.0589L48.5581 11.0271H32.2605L22.7645 25.102H16.9805Z');
+        footerPath2.setAttribute('fill', '#8B5CF6');
+        
+        footerLogoGroup.appendChild(footerPath1);
+        footerLogoGroup.appendChild(footerPath2);
+        footerSvgLogo.appendChild(footerLogoGroup);
+        
+        footerText.appendChild(footerSvgLogo);
+        
+        const textNode = document.createTextNode(` Collage.fm • ${dateString}`);
+        footerText.appendChild(textNode);
+        
+        footer.appendChild(footerText);
+        exportContainer.appendChild(footer);
+      }
       
       exportWrapper.appendChild(exportContainer);
       
@@ -325,7 +340,8 @@ export default function CollageContainer({
       const dataUrl = canvas.toDataURL('image/png');
       
       const link = document.createElement('a');
-      link.download = `${username}-${type}-${period}-${gridSize}.png`;
+      const filePrefix = showStyles ? 'styled-' : '';
+      link.download = `${filePrefix}${username}-${type}-${period}-${gridSize}.png`;
       link.href = dataUrl;
       link.click();
     } catch (err) {
@@ -482,6 +498,23 @@ export default function CollageContainer({
                       onChange={() => setShowPlayCount(!showPlayCount)} 
                     />
                     <span>{t('collage.downloadOptions.showPlayCount')}</span>
+                  </label>
+                  
+                  <label className="flex items-center space-x-3 text-gray-700 dark:text-gray-200 cursor-pointer p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors select-none">
+                    <div className={`w-5 h-5 border-2 rounded flex items-center justify-center ${showStyles ? 'border-indigo-500 bg-indigo-500/10' : 'border-gray-300 dark:border-gray-600'}`}>
+                      {showStyles && (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-indigo-600 dark:text-indigo-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </div>
+                    <input 
+                      type="checkbox" 
+                      className="sr-only" 
+                      checked={showStyles} 
+                      onChange={() => setShowStyles(!showStyles)} 
+                    />
+                    <span>{t('collage.downloadOptions.showStyles')}</span>
                   </label>
                 </div>
                 

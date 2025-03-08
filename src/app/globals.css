@@ -185,17 +185,43 @@ body {
   @apply bg-clip-text text-transparent bg-gradient-to-r;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - Modern & Futuristic */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-800;
+  @apply bg-transparent;
 }
 
-::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-600 rounded-full hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors;
+/* Light mode scrollbar */
+.light ::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-b from-indigo-400 via-purple-400 to-indigo-500 
+         rounded-full border border-indigo-200/50
+         hover:from-indigo-500 hover:to-purple-500
+         transition-all duration-300 backdrop-blur-sm;
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-b from-indigo-600 via-purple-700 to-indigo-800
+         rounded-full border border-indigo-400/20
+         hover:from-indigo-500 hover:to-purple-600
+         transition-all duration-300 backdrop-blur-sm;
+}
+
+::-webkit-scrollbar-corner {
+  @apply bg-transparent;
+}
+
+/* Add glow effect on hover for futuristic look */
+.light ::-webkit-scrollbar-thumb:hover {
+  @apply shadow-[0_0_8px_rgba(99,102,241,0.6)];
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  @apply shadow-[0_0_8px_rgba(139,92,246,0.6)];
 }
 
 /* Focus styles */
