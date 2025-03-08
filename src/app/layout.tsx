@@ -7,8 +7,18 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "LastMosaic - Generate Last.fm Collages",
-  description: "Create beautiful collages from your Last.fm listening history",
+  title: 'LastMosaic',
+  description: 'Create beautiful music collages from your Last.fm',
+  icons: [
+    { rel: 'icon', url: '/favicon.svg', type: 'image/svg+xml' },
+    { rel: 'apple-touch-icon', sizes: '180x180', url: '/favicon.svg' },
+  ],
+  manifest: '/manifest.json',
+  themeColor: '#1E293B',
+  appleWebApp: {
+    title: 'LastMosaic',
+    statusBarStyle: 'black-translucent',
+  },
 };
 
 export default function RootLayout({

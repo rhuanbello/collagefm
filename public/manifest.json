@@ -1,0 +1,17 @@
+{
+  "name": "LastMosaic",
+  "short_name": "LastMosaic",
+  "description": "Create beautiful music collages from your Last.fm",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1E293B",
+  "theme_color": "#1E293B",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+} 

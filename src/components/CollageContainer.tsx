@@ -126,6 +126,14 @@ export default function CollageContainer({
       headerDiv.style.position = 'relative';
       headerDiv.style.zIndex = '1';
       
+      // Create title container for flexbox layout
+      const titleContainer = document.createElement('div');
+      titleContainer.style.display = 'flex';
+      titleContainer.style.alignItems = 'center';
+      titleContainer.style.justifyContent = 'center';
+      titleContainer.style.gap = '8px';
+      titleContainer.style.marginBottom = '8px';
+      
       const title = document.createElement('h1');
       title.textContent = t('collage.title', { 
         username: collageData.username, 
@@ -133,12 +141,12 @@ export default function CollageContainer({
       });
       title.style.fontSize = '36px';
       title.style.fontWeight = 'bold';
-      title.style.marginBottom = '8px';
       title.style.color = document.documentElement.classList.contains('dark') 
         ? '#6366f1'
         : '#4f46e5';
       
-      headerDiv.appendChild(title);
+      titleContainer.appendChild(title);
+      headerDiv.appendChild(titleContainer);
       
       const subtitle = document.createElement('p');
       subtitle.textContent = `${t(`form.period.options.${period}`)}`;
@@ -267,7 +275,36 @@ export default function CollageContainer({
       footer.style.zIndex = '1';
       
       const footerText = document.createElement('p');
-      footerText.textContent = `${t('common.generatedWith')} LastMosaic • ${dateString}`;
+      footerText.textContent = `${t('common.generatedWith')} `;
+      
+      // Create SVG logo element
+      const footerSvgLogo = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      footerSvgLogo.setAttribute('viewBox', '0 0 48 34');
+      footerSvgLogo.setAttribute('width', '16');
+      footerSvgLogo.setAttribute('height', '16');
+      footerSvgLogo.style.display = 'inline-block';
+      footerSvgLogo.style.verticalAlign = 'middle';
+      footerSvgLogo.style.marginRight = '4px';
+      
+      const footerLogoGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      footerLogoGroup.setAttribute('transform', 'translate(0, 0.5)');
+      
+      const footerPath1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      footerPath1.setAttribute('d', 'M16.0573 0H37.1389L21.6397 22.9729H0.558105L16.0573 0Z');
+      footerPath1.setAttribute('fill', '#6366F1');
+      
+      const footerPath2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      footerPath2.setAttribute('d', 'M16.9805 25.102L10.9773 34H33.0589L48.5581 11.0271H32.2605L22.7645 25.102H16.9805Z');
+      footerPath2.setAttribute('fill', '#8B5CF6');
+      
+      footerLogoGroup.appendChild(footerPath1);
+      footerLogoGroup.appendChild(footerPath2);
+      footerSvgLogo.appendChild(footerLogoGroup);
+      
+      footerText.appendChild(footerSvgLogo);
+      
+      const textNode = document.createTextNode(` LastMosaic • ${dateString}`);
+      footerText.appendChild(textNode);
       
       footer.appendChild(footerText);
       exportContainer.appendChild(footer);
@@ -451,7 +488,7 @@ export default function CollageContainer({
                   <motion.button
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
-                    className="py-2 rounded-lg text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 font-medium text-sm transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-600"
+                    className="py-2 rounded-lg text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 font-medium text-sm transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer"
                     onClick={cancelDownload}
                   >
                     {t('common.cancel')}
@@ -460,7 +497,7 @@ export default function CollageContainer({
                   <motion.button
                     whileHover={{ scale: 1.03, boxShadow: "0 10px 15px -3px rgba(99, 102, 241, 0.3)" }}
                     whileTap={{ scale: 0.97 }}
-                    className="py-2 rounded-lg text-white font-medium text-sm bg-gradient-to-r from-indigo-500 to-purple-600 transition-all duration-200 shadow-md"
+                    className="py-2 rounded-lg text-white font-medium text-sm bg-gradient-to-r from-indigo-500 to-purple-600 transition-all duration-200 shadow-md cursor-pointer"
                     onClick={processDownload}
                   >
                     {t('collage.downloadOptions.applyDownload')}
@@ -533,7 +570,20 @@ export default function CollageContainer({
         transition={{ delay: 0.8, duration: 0.5 }}
         className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400"
       >
-        <p>{t('common.generatedWith')} LastMosaic {mounted ? `• ${dateString}` : ''}</p>
+        <div className="flex items-center justify-center gap-1">
+          <svg
+            data-logo="logo"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 240 35"
+            className="h-4 w-auto"
+          >
+            <g id="logogram" transform="translate(0, 0.5)">
+              <path d="M16.0573 0H37.1389L21.6397 22.9729H0.558105L16.0573 0Z" fill="#6366F1"></path>
+              <path d="M16.9805 25.102L10.9773 34H33.0589L48.5581 11.0271H32.2605L22.7645 25.102H16.9805Z" fill="#8B5CF6"></path>
+            </g>
+          </svg>
+          <p>{t('common.generatedWith')} LastMosaic {mounted ? `• ${dateString}` : ''}</p>
+        </div>
       </motion.div>
     </motion.div>
   );

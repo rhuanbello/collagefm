@@ -7,14 +7,26 @@ LastMosaic is a web application that generates visual collages of your most list
 - Generate collages of your top artists or albums from Last.fm
 - Choose from different time periods (1 week, 1 month, 3 months, 6 months, 12 months, or all time)
 - Select different grid sizes (3×3, 4×4, 5×5, or 10×10)
+- Customize your collage with titles and play count display options
+- Download high-quality images of your collages
+- Username persistence with cookies for easy repeat visits
+- Full internationalization support (currently English and Portuguese)
 - Modern, responsive UI built with Next.js and Shadcn/ui
-- Dark mode support
+- Dark mode and light mode support with system preference detection
+- Mobile-friendly design
 
 ## Tech Stack
 
-- [Next.js](https://nextjs.org/) - React framework
+- [Next.js 15](https://nextjs.org/) - React framework with App Router
+- [React 19](https://react.dev/) - UI library
 - [Shadcn/ui](https://ui.shadcn.com/) - UI components
-- [TailwindCSS](https://tailwindcss.com/) - CSS framework
+- [TailwindCSS 4](https://tailwindcss.com/) - CSS framework
+- [Framer Motion](https://www.framer.com/motion/) - Animation library
+- [Next-Intl](https://next-intl-docs.vercel.app/) - Internationalization
+- [Next-Themes](https://github.com/pacocoursey/next-themes) - Theme management
+- [Zod](https://zod.dev/) - Form validation
+- [React Hook Form](https://react-hook-form.com/) - Form handling
+- [html2canvas-pro](https://html2canvas.hertzen.com/) - Screenshot generation
 - [Last.fm API](https://www.last.fm/api) - Music data
 
 ## Getting Started
@@ -56,7 +68,19 @@ LastMosaic is a web application that generates visual collages of your most list
 3. Choose a time period
 4. Select a grid size
 5. Click "Generate Collage"
-6. View and download your collage
+6. View your collage with customization options:
+   - Toggle display of titles
+   - Toggle display of play counts
+7. Download your collage as a high-quality image
+
+## Internationalization
+
+LastMosaic supports multiple languages:
+
+- English (en)
+- Portuguese (pt-BR)
+
+The application automatically detects your browser's language preference, but you can manually switch languages using the language selector in the UI.
 
 ## Deployment
 

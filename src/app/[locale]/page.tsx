@@ -16,9 +16,15 @@ export default function Home() {
       </div>
       
       <div className="text-center mb-8 relative z-10">
-        <h1 className="text-5xl font-bold tracking-tight mb-2 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-          {t('common.lastmosaic')}
-        </h1>
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <svg width="48" height="34" viewBox="0 0 48 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.4992 0H36.5808L21.0816 22.9729H0L15.4992 0Z" fill="#6366F1"/>
+            <path d="M16.4224 25.102L10.4192 34H32.5008L48 11.0271H31.7024L22.2064 25.102H16.4224Z" fill="#8B5CF6"/>
+          </svg>
+          <h1 className="text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
+            {t('common.lastmosaic')}
+          </h1>
+        </div>
         <p className="text-lg text-gray-700 dark:text-gray-300 max-w-md mx-auto">
           {t('home.tagline')}
         </p>
