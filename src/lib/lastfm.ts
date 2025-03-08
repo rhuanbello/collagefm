@@ -6,7 +6,7 @@ const BASE_URL = 'https://ws.audioscrobbler.com/2.0/';
 
 
 export const PERIODS = {
-  '1week': 'Last 7 days',
+  '7day': 'Last 7 days',
   '1month': 'Last 30 days',
   '3month': 'Last 3 months',
   '6month': 'Last 6 months',
@@ -15,7 +15,7 @@ export const PERIODS = {
 };
 
 export const PERIOD_OPTIONS = [
-  { value: '1week', label: PERIODS['1week'] },
+  { value: '7day', label: PERIODS['7day'] },
   { value: '1month', label: PERIODS['1month'] },
   { value: '3month', label: PERIODS['3month'] },
   { value: '6month', label: PERIODS['6month'] },

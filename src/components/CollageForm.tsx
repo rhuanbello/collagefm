@@ -12,11 +12,19 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { PERIOD_OPTIONS, GRID_SIZE_OPTIONS } from '@/lib/lastfm';
 
+// Helper function to safely get translations
+const safeT = (t: ReturnType<typeof useTranslations>, key: string): string => {
+  // This function helps bypass the TypeScript type checking for dynamic translation keys
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return t(key as any);
+};
 
 const createFormSchema = (t: ReturnType<typeof useTranslations>) => {
   return z.object({
-    username: z.string().min(1, t('form.username.required')),
-    period: z.string().default('1month'),
+    username: z.string().min(1, {
+      message: safeT(t, 'form.username.required')
+    }),
+    period: z.string().default('7day'),
     gridSize: z.string().default('5x5'),
     type: z.enum(['artists', 'albums']).default('albums'),
   });
@@ -59,7 +67,7 @@ export default function CollageForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: '',
-      period: '1month',
+      period: '7day',
       gridSize: '5x5',
       type: 'albums',
     },
@@ -164,14 +172,14 @@ export default function CollageForm() {
                       <Input 
                         placeholder={t('form.username.placeholder')} 
                         {...field} 
-                        className="bg-white/70 dark:bg-gray-800/70 border-0 focus-visible:ring-2 focus-visible:ring-indigo-500 dark:focus-visible:ring-indigo-400 h-11 rounded-xl"
+                        className="bg-white/70 dark:bg-gray-800/70 border-0 focus-visible:ring-2 focus-visible:ring-indigo-500 dark:focus-visible:ring-indigo-400 h-11 rounded-xl text-gray-800 dark:text-gray-200"
                       />
                     </FormControl>
                     {hasStoredUsername && (
                       <motion.div 
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="absolute right-3 top-1/2 -translate-y-1/2"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5"
                       >
                         <button
                           type="button"
@@ -212,8 +220,8 @@ export default function CollageForm() {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="bg-white/70 dark:bg-gray-800/70 border-0 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 h-11 rounded-xl">
-                        <SelectValue placeholder={t('form.type.label')} />
+                      <SelectTrigger className="bg-white/70 dark:bg-gray-800/70 border-0 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 h-11 rounded-xl text-gray-800 dark:text-gray-200">
+                        <SelectValue placeholder={t('form.type.label')} className="text-gray-800 dark:text-gray-200" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border border-gray-200 dark:border-gray-700">
@@ -222,12 +230,6 @@ export default function CollageForm() {
                         className="focus:bg-indigo-50 dark:focus:bg-indigo-900/30 text-gray-800 dark:text-gray-200"
                       >
                         {t('form.type.options.albums')}
-                      </SelectItem>
-                      <SelectItem 
-                        value="artists"
-                        className="focus:bg-indigo-50 dark:focus:bg-indigo-900/30 text-gray-800 dark:text-gray-200"
-                      >
-                        {t('form.type.options.artists')}
                       </SelectItem>
                     </SelectContent>
                   </Select>
@@ -249,8 +251,8 @@ export default function CollageForm() {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="bg-white/70 dark:bg-gray-800/70 border-0 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 h-11 rounded-xl">
-                        <SelectValue placeholder={t('form.period.label')} />
+                      <SelectTrigger className="bg-white/70 dark:bg-gray-800/70 border-0 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 h-11 rounded-xl text-gray-800 dark:text-gray-200">
+                        <SelectValue placeholder={t('form.period.label')} className="text-gray-800 dark:text-gray-200" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border border-gray-200 dark:border-gray-700">
@@ -260,7 +262,7 @@ export default function CollageForm() {
                           value={option.value}
                           className="focus:bg-indigo-50 dark:focus:bg-indigo-900/30 text-gray-800 dark:text-gray-200"
                         >
-                          {t(`form.period.options.${option.value}`)}
+                          {safeT(t, `form.period.options.${option.value}`)}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -285,8 +287,8 @@ export default function CollageForm() {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="bg-white/70 dark:bg-gray-800/70 border-0 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 h-11 rounded-xl">
-                        <SelectValue placeholder={t('form.gridSize.label')} />
+                      <SelectTrigger className="bg-white/70 dark:bg-gray-800/70 border-0 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 h-11 rounded-xl text-gray-800 dark:text-gray-200">
+                        <SelectValue placeholder={t('form.gridSize.label')} className="text-gray-800 dark:text-gray-200" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border border-gray-200 dark:border-gray-700">
@@ -296,7 +298,7 @@ export default function CollageForm() {
                           value={option.value}
                           className="focus:bg-indigo-50 dark:focus:bg-indigo-900/30 text-gray-800 dark:text-gray-200"
                         >
-                          {t(`form.gridSize.options.${option.value}`)}
+                          {safeT(t, `form.gridSize.options.${option.value}`)}
                         </SelectItem>
                       ))}
                     </SelectContent>

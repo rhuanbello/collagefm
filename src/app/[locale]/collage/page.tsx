@@ -110,8 +110,7 @@ export default async function CollagePage({
     const collageData = await res.json();
 
     return (
-      <main className="min-h-screen py-8 relative overflow-hidden">
-        
+      <main className="min-h-screen relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 -z-10"></div>
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-5">
           <div className="absolute -top-40 right-[10%] w-96 h-96 bg-purple-500/10 dark:bg-purple-600/20 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl"></div>
@@ -132,8 +131,7 @@ export default async function CollagePage({
             </div>
           </div>
         }>
-          
-          <div className="relative z-10">
+          <div className="relative z-10 py-8">
             <CollageContainer 
               initialData={collageData}
               username={username}
@@ -150,7 +148,6 @@ export default async function CollagePage({
     console.error("Failed to load collage data:", error);
     return (
       <main className="min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden">
-        
         <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 -z-10"></div>
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-5">
           <div className="absolute -top-40 right-[10%] w-96 h-96 bg-purple-500/10 dark:bg-purple-600/20 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl"></div>

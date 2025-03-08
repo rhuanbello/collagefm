@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import CollageForm from '@/components/CollageForm';
+import { Logo } from '@/components/svg/Logo';
 
 export default function Home() {
   const t = useTranslations();
@@ -9,23 +10,21 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
       <div className="relative w-full max-w-3xl mx-auto">
-        
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-purple-500/10 dark:bg-purple-600/20 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl animate-blob"></div>
         <div className="absolute top-60 -left-20 w-72 h-72 bg-cyan-500/10 dark:bg-cyan-600/20 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl animate-blob animation-delay-2000"></div>
         <div className="absolute -bottom-40 left-20 w-80 h-80 bg-blue-500/10 dark:bg-blue-600/20 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl animate-blob animation-delay-4000"></div>
       </div>
       
       <div className="text-center mb-8 relative z-10">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <svg width="48" height="34" viewBox="0 0 48 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15.4992 0H36.5808L21.0816 22.9729H0L15.4992 0Z" fill="#6366F1"/>
-            <path d="M16.4224 25.102L10.4192 34H32.5008L48 11.0271H31.7024L22.2064 25.102H16.4224Z" fill="#8B5CF6"/>
-          </svg>
-          <h1 className="text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-            {t('common.lastmosaic')}
-          </h1>
+        <div className="flex items-center justify-center mb-2">
+          <Logo />
+          <div className="overflow-visible">
+            <h1 className="text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 px-2 py-1 leading-relaxed">
+              {t('common.collagefm')}
+            </h1>
+          </div>
         </div>
-        <p className="text-lg text-gray-700 dark:text-gray-300 max-w-md mx-auto">
+        <p className="text-lg text-gray-700 dark:text-gray-300 max-w-md mx-auto mt-2">
           {t('home.tagline')}
         </p>
       </div>
@@ -36,11 +35,11 @@ export default function Home() {
       
       <footer className="mt-16 text-center text-sm text-gray-600 dark:text-gray-400 relative z-10 max-w-md mx-auto">
         <p className="mb-2">
-          Built with Next.js and the Last.fm API by <a href="https://github.com/rhuanbello" target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 hover:underline">Rhuan Bello</a>
+          Built with Next.js and the Last.fm API by <a href="https://last.fm/user/rhuanbello" target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 hover:underline">Rhuan Bello</a>
         </p>
         <p>
           <a 
-            href="https://github.com/rhuanbello/lastmosaic"
+            href="https://github.com/rhuanbello/collagefm"
             target="_blank" 
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors"

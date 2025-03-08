@@ -1,6 +1,5 @@
 import { createTranslator } from 'next-intl';
 
-
 export const locales = ['en', 'pt-BR'] as const;
 export type Locale = typeof locales[number];
 export const defaultLocale: Locale = 'en';
@@ -31,9 +30,9 @@ export function formatNumber(number: number, locale: string) {
 }
 
 
-export function createClientTranslator(messages: Record<string, unknown>, locale: Locale = defaultLocale) {
+export function createClientTranslator(messages: IntlMessages | Record<string, unknown>, locale: Locale = defaultLocale) {
   return {
-    t: createTranslator({ locale, messages }),
+    t: createTranslator({ locale, messages: messages as IntlMessages }),
     locale,
   };
 }

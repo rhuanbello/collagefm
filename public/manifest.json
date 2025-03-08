@@ -1,6 +1,6 @@
 {
-  "name": "LastMosaic",
-  "short_name": "LastMosaic",
+  "name": "Collage.fm",
+  "short_name": "Collage.fm",
   "description": "Create beautiful music collages from your Last.fm",
   "start_url": "/",
   "display": "standalone",

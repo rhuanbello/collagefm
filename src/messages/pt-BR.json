@@ -1,10 +1,10 @@
 {
   "meta": {
-    "title": "LastMosaic - Crie suas colagens musicais do Last.fm",
+    "title": "Collage.fm - Crie suas colagens musicais do Last.fm",
     "description": "Gere belas colagens dos seus artistas e álbuns favoritos do Last.fm."
   },
   "common": {
-    "lastmosaic": "LastMosaic",
+    "collagefm": "Collage.fm",
     "by": "por",
     "plays": "reproduções",
     "generatedWith": "Gerado com",
@@ -31,7 +31,7 @@
   "home": {
     "tagline": "Crie belas colagens musicais a partir de seus dados do Last.fm",
     "generateButton": "Gerar Colagem",
-    "title": "LastMosaic",
+    "title": "Collage.fm",
     "cta": "Gerar sua colagem"
   },
   "form": {
@@ -57,7 +57,7 @@
       "label": "Período de Tempo",
       "description": "Selecione o período para suas músicas mais ouvidas",
       "options": {
-        "1week": "Últimos 7 dias",
+        "7day": "Últimos 7 dias",
         "1month": "Último mês",
         "3month": "Últimos 3 meses",
         "6month": "Últimos 6 meses",
@@ -69,10 +69,10 @@
       "label": "Tamanho da Grade",
       "description": "Selecione o tamanho da grade da sua colagem",
       "options": {
-        "3x3": "3×3 (9 itens)",
-        "4x4": "4×4 (16 itens)",
-        "5x5": "5×5 (25 itens)",
-        "10x10": "10×10 (100 itens)"
+        "3x3": "3x3 (9 itens)",
+        "4x4": "4x4 (16 itens)",
+        "5x5": "5x5 (25 itens)",
+        "10x10": "10x10 (100 itens)"
       }
     },
     "submit": "Gerar Colagem",

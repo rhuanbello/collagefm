@@ -8,7 +8,8 @@ import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { formatNumber } from '@/lib/i18n';
-
+import { Logo } from '@/components/svg/Logo';
+import { PERIODS } from '@/lib/lastfm';
 interface CollageItem {
   name: string;
   artist?: string;
@@ -149,7 +150,7 @@ export default function CollageContainer({
       headerDiv.appendChild(titleContainer);
       
       const subtitle = document.createElement('p');
-      subtitle.textContent = `${t(`form.period.options.${period}`)}`;
+      subtitle.textContent = `${t(`form.period.options.${period as keyof typeof PERIODS}`)}`;
       subtitle.style.fontSize = '16px';
       subtitle.style.color = document.documentElement.classList.contains('dark') ? '#d1d5db' : '#4b5563';
       headerDiv.appendChild(subtitle);
@@ -303,7 +304,7 @@ export default function CollageContainer({
       
       footerText.appendChild(footerSvgLogo);
       
-      const textNode = document.createTextNode(` LastMosaic • ${dateString}`);
+      const textNode = document.createTextNode(` Collage.fm • ${dateString}`);
       footerText.appendChild(textNode);
       
       footer.appendChild(footerText);
@@ -386,7 +387,7 @@ export default function CollageContainer({
           })}
         </h1>
         <p className="text-gray-600 dark:text-gray-300 mb-6 font-medium">
-          {t(`form.period.options.${collageData.period}`)} • {collageData.gridSize} grid
+          {t(`form.period.options.${collageData.period as keyof typeof PERIODS}`)} • {collageData.gridSize} grid
         </p>
 
         <div className="flex flex-wrap justify-center gap-4">
@@ -571,18 +572,12 @@ export default function CollageContainer({
         className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400"
       >
         <div className="flex items-center justify-center gap-1">
-          <svg
-            data-logo="logo"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 240 35"
-            className="h-4 w-auto"
-          >
-            <g id="logogram" transform="translate(0, 0.5)">
-              <path d="M16.0573 0H37.1389L21.6397 22.9729H0.558105L16.0573 0Z" fill="#6366F1"></path>
-              <path d="M16.9805 25.102L10.9773 34H33.0589L48.5581 11.0271H32.2605L22.7645 25.102H16.9805Z" fill="#8B5CF6"></path>
-            </g>
-          </svg>
-          <p>{t('common.generatedWith')} LastMosaic {mounted ? `• ${dateString}` : ''}</p>
+          <span>{t('common.generatedWith')}</span> 
+          <Logo className="w-4 h-4" /> 
+          <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
+            {t('common.collagefm')}
+          </span>
+          {mounted && <span>• {dateString}</span>}
         </div>
       </motion.div>
     </motion.div>

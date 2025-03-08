@@ -1,6 +1,6 @@
-# LastMosaic
+# Collage.fm
 
-LastMosaic is a web application that generates visual collages of your most listened artists and albums on Last.fm. Create beautiful grids of your music taste to share with friends or on social media.
+Collage.fm is a web application that generates visual collages of your most listened artists and albums on Last.fm. Create beautiful grids of your music taste to share with friends or on social media.
 
 ## Features
 
@@ -40,8 +40,8 @@ LastMosaic is a web application that generates visual collages of your most list
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/lastmosaic.git
-   cd lastmosaic
+   git clone https://github.com/yourusername/collagefm.git
+   cd collagefm
    ```
 
 2. Install dependencies:
@@ -75,20 +75,12 @@ LastMosaic is a web application that generates visual collages of your most list
 
 ## Internationalization
 
-LastMosaic supports multiple languages:
+Collage.fm supports multiple languages:
 
 - English (en)
 - Portuguese (pt-BR)
 
 The application automatically detects your browser's language preference, but you can manually switch languages using the language selector in the UI.
-
-## Deployment
-
-This project can be easily deployed to Vercel:
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyourusername%2Flastmosaic)
-
-Remember to add your `LASTFM_API_KEY` to the environment variables in your Vercel project settings.
 
 ## License
 

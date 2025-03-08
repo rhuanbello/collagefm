@@ -7,16 +7,15 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'LastMosaic',
+  title: 'Collage.fm',
   description: 'Create beautiful music collages from your Last.fm',
   icons: [
     { rel: 'icon', url: '/favicon.svg', type: 'image/svg+xml' },
     { rel: 'apple-touch-icon', sizes: '180x180', url: '/favicon.svg' },
   ],
   manifest: '/manifest.json',
-  themeColor: '#1E293B',
   appleWebApp: {
-    title: 'LastMosaic',
+    title: 'Collage.fm',
     statusBarStyle: 'black-translucent',
   },
 };
@@ -34,7 +33,7 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-          storageKey="lastmosaic-theme"
+          storageKey="collagefm-theme"
         >
           
           <div className="fixed inset-0 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 -z-20"></div>
