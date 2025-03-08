@@ -49,14 +49,13 @@ export default async function CollagePage({
 
   const messages = await getMessages(locale as Locale);
 
-  
+  // Get username from URL params
   const username = typeof resolvedSearchParams.username === 'string' ? resolvedSearchParams.username : '';
   const period = typeof resolvedSearchParams.period === 'string' ? resolvedSearchParams.period : 'overall';
   const type = typeof resolvedSearchParams.type === 'string' && allowedTypes.includes(resolvedSearchParams.type) ? resolvedSearchParams.type : 'albums';
   const gridSizeParam = typeof resolvedSearchParams.gridSize === 'string' ? resolvedSearchParams.gridSize : '3x3';
   const gridSize = isValidGridSize(gridSizeParam) ? gridSizeParam : '3x3';
 
-  
   if (!username) {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden">

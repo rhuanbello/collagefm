@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -22,15 +22,39 @@ const createFormSchema = (t: ReturnType<typeof useTranslations>) => {
   });
 };
 
+// Cookie helper functions
+const setCookie = (name: string, value: string, days: number) => {
+  const date = new Date();
+  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+  const expires = `; expires=${date.toUTCString()}`;
+  document.cookie = `${name}=${value}${expires}; path=/`;
+};
+
+const getCookie = (name: string): string | null => {
+  if (typeof document === 'undefined') return null;
+  
+  const nameEQ = `${name}=`;
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+};
+
 export default function CollageForm() {
   const t = useTranslations();
   const locale = useLocale();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const [hasStoredUsername, setHasStoredUsername] = useState(false);
   
+  // Form schema creation
   const formSchema = createFormSchema(t);
+  
+  // Create form with saved username if available
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,20 +65,52 @@ export default function CollageForm() {
     },
   });
 
+  // Function to clear stored username
+  const clearStoredUsername = () => {
+    // Clear from cookies
+    document.cookie = 'lastfm_username=; max-age=0; path=/';
+    
+    // Clear from localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('lastfm_username');
+    }
+    
+    // Reset form field
+    form.setValue('username', '');
+    setHasStoredUsername(false);
+  };
+
+  // Load the username from cookie when component mounts
+  useEffect(() => {
+    const savedUsername = getCookie('lastfm_username');
+    if (savedUsername) {
+      form.setValue('username', savedUsername);
+      setHasStoredUsername(true);
+    }
+  }, [form]);
   
+  // Form submission handler
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     setError(null);
 
     try {
-      
+      // Validate username with API
       const validateResponse = await fetch(`/api/fetch-data?username=${values.username}`);
       if (!validateResponse.ok) {
         const errorData = await validateResponse.json();
         throw new Error(errorData.error || t('errors.invalidUsername'));
       }
 
+      // Save username to cookie for 365 days
+      setCookie('lastfm_username', values.username, 365);
       
+      // Store in localStorage as backup
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('lastfm_username', values.username);
+      }
+      
+      // Prepare URL parameters for collage page
       const params = new URLSearchParams({
         username: values.username,
         period: values.period,
@@ -69,7 +125,7 @@ export default function CollageForm() {
     }
   }
 
-  
+  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -103,13 +159,33 @@ export default function CollageForm() {
                   <FormLabel className="text-gray-800 dark:text-gray-200 font-medium">
                     {t('form.username.label')}
                   </FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder={t('form.username.placeholder')} 
-                      {...field} 
-                      className="bg-white/70 dark:bg-gray-800/70 border-0 focus-visible:ring-2 focus-visible:ring-indigo-500 dark:focus-visible:ring-indigo-400 h-11 rounded-xl"
-                    />
-                  </FormControl>
+                  <div className="relative">
+                    <FormControl>
+                      <Input 
+                        placeholder={t('form.username.placeholder')} 
+                        {...field} 
+                        className="bg-white/70 dark:bg-gray-800/70 border-0 focus-visible:ring-2 focus-visible:ring-indigo-500 dark:focus-visible:ring-indigo-400 h-11 rounded-xl"
+                      />
+                    </FormControl>
+                    {hasStoredUsername && (
+                      <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="absolute right-3 top-1/2 -translate-y-1/2"
+                      >
+                        <button
+                          type="button"
+                          onClick={clearStoredUsername}
+                          className="text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition-colors"
+                          aria-label="Clear saved username"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                          </svg>
+                        </button>
+                      </motion.div>
+                    )}
+                  </div>
                   <FormDescription className="text-gray-600 dark:text-gray-400">
                     {t('form.username.description')}
                   </FormDescription>
