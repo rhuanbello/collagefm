@@ -1,0 +1,119 @@
+{
+  "meta": {
+    "title": "LastMosaic - Create your Last.fm music collages",
+    "description": "Generate beautiful collages of your top artists and albums from Last.fm."
+  },
+  "common": {
+    "lastmosaic": "LastMosaic",
+    "by": "by",
+    "plays": "plays",
+    "generatedWith": "Generated with",
+    "apply": "Apply",
+    "cancel": "Cancel",
+    "loading": "Loading...",
+    "processing": "Processing...",
+    "downloading": "Downloading...",
+    "error": "Error",
+    "success": "Success",
+    "back": "Back",
+    "save": "Save",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "backToHome": "Back to Home",
+    "backToForm": "Back to Form",
+    "tryAgain": "Try Again",
+    "language": {
+      "en": "English",
+      "pt-BR": "Portuguese"
+    }
+  },
+  "home": {
+    "tagline": "Create beautiful music collages from your Last.fm",
+    "generateButton": "Generate Collage",
+    "title": "LastMosaic",
+    "cta": "Generate your collage"
+  },
+  "form": {
+    "username": {
+      "label": "Last.fm Username",
+      "placeholder": "Enter your Last.fm username",
+      "description": "Your Last.fm username to fetch music data",
+      "required": "Username is required",
+      "tooShort": "Username must be at least 2 characters",
+      "tooLong": "Username must be less than 30 characters",
+      "invalid": "Username can only contain letters, numbers, and - _ .",
+      "notFound": "Last.fm user not found"
+    },
+    "type": {
+      "label": "Collage Type",
+      "description": "Choose between top albums or top artists",
+      "options": {
+        "albums": "Albums",
+        "artists": "Artists"
+      }
+    },
+    "period": {
+      "label": "Time Period",
+      "description": "Select the time period for your top music",
+      "options": {
+        "1week": "Last 7 days",
+        "1month": "Last month",
+        "3month": "Last 3 months",
+        "6month": "Last 6 months",
+        "12month": "Last 12 months",
+        "overall": "All time"
+      }
+    },
+    "gridSize": {
+      "label": "Grid Size",
+      "description": "Select the size of your collage grid",
+      "options": {
+        "3x3": "3×3 (9 items)",
+        "4x4": "4×4 (16 items)",
+        "5x5": "5×5 (25 items)",
+        "10x10": "10×10 (100 items)"
+      }
+    },
+    "submit": "Generate Collage",
+    "submitting": "Generating..."
+  },
+  "collage": {
+    "title": "{username}'s Top {type}",
+    "topArtists": "Artists",
+    "topAlbums": "Albums",
+    "noData": "No data found for this username with the selected options",
+    "backToForm": "Back to Form",
+    "downloadCollage": "Download Collage",
+    "noImage": "No image",
+    "downloadOptions": {
+      "title": "Download Options",
+      "subtitle": "Customize your collage export",
+      "showTitle": "Show titles",
+      "showPlayCount": "Show play count",
+      "applyDownload": "Download"
+    }
+  },
+  "errors": {
+    "invalidUsername": "Invalid Last.fm username",
+    "usernameRequired": "Username is required",
+    "failedToFetch": "Failed to fetch data from Last.fm",
+    "failedToGenerate": "Failed to generate collage",
+    "generalError": "An error occurred. Please try again.",
+    "noUsername": "No username provided. Please enter a Last.fm username to generate a collage.",
+    "failedToLoad": "Failed to load data. Please try again or check your Last.fm username.",
+    "pageNotFound": "Page Not Found",
+    "pageNotFoundDesc": "The page you're looking for doesn't exist or has been moved.",
+    "somethingWentWrong": "Something Went Wrong",
+    "errorOccurred": "An error occurred. You can try again or return to the home page."
+  },
+  "pluralization": {
+    "plays": {
+      "one": "{count} play",
+      "other": "{count} plays"
+    }
+  },
+  "dates": {
+    "format": "MM/DD/YYYY"
+  }
+} 

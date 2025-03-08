@@ -1,49 +1,91 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getTopArtists, getTopAlbums, validateLastFMUsername } from '@/lib/lastfm';
+import { Locale, defaultLocale } from '@/lib/i18n';
+import { fetchAlbumCollageData, fetchArtistCollageData } from '@/lib/lastfm';
 
 export async function GET(request: NextRequest) {
+  
+  const acceptLanguage = request.headers.get('accept-language') || '';
+  const locale = acceptLanguage.includes('pt-BR') ? 'pt-BR' : defaultLocale as Locale;
+  
+  
   const searchParams = request.nextUrl.searchParams;
   const username = searchParams.get('username');
   const period = searchParams.get('period') || 'overall';
-  const type = searchParams.get('type') || 'artists'; // artists or albums
+  const type = searchParams.get('type') || 'artists'; 
   const limit = parseInt(searchParams.get('limit') || '50', 10);
-
-  // Validate required parameters
+  
+  
   if (!username) {
     return NextResponse.json(
-      { error: 'Username is required' },
+      { error: locale === 'pt-BR' ? 'Nome de usuário é obrigatório' : 'Username is required' },
       { status: 400 }
     );
   }
-
+  
   try {
-    // Validate the username first
-    const isValidUsername = await validateLastFMUsername(username);
-    if (!isValidUsername) {
-      return NextResponse.json(
-        { error: 'Invalid Last.fm username' },
-        { status: 404 }
-      );
-    }
-
-    // Fetch the data based on type
+    
+    
+    const gridSizeNeeded = limit <= 9 ? '3x3' : 
+                           limit <= 16 ? '4x4' : 
+                           limit <= 25 ? '5x5' : '10x10';
+    
     let data;
     if (type === 'artists') {
-      data = await getTopArtists(username, period, limit);
+      const collageData = await fetchArtistCollageData(username, period, gridSizeNeeded);
+      
+      data = {
+        topartists: {
+          artist: collageData.items.slice(0, limit).map(item => ({
+            name: item.name,
+            playcount: item.playcount.toString(),
+            image: [
+              { size: 'small', '#text': item.imageUrl },
+              { size: 'medium', '#text': item.imageUrl },
+              { size: 'large', '#text': item.imageUrl },
+              { size: 'extralarge', '#text': item.imageUrl }
+            ]
+          }))
+        }
+      };
     } else if (type === 'albums') {
-      data = await getTopAlbums(username, period, limit);
+      const collageData = await fetchAlbumCollageData(username, period, gridSizeNeeded);
+      
+      data = {
+        topalbums: {
+          album: collageData.items.slice(0, limit).map(item => ({
+            name: item.name,
+            artist: { name: item.artist || '' },
+            playcount: item.playcount.toString(),
+            image: [
+              { size: 'small', '#text': item.imageUrl },
+              { size: 'medium', '#text': item.imageUrl },
+              { size: 'large', '#text': item.imageUrl },
+              { size: 'extralarge', '#text': item.imageUrl }
+            ]
+          }))
+        }
+      };
     } else {
       return NextResponse.json(
-        { error: 'Invalid type. Must be "artists" or "albums"' },
+        { error: locale === 'pt-BR' ? 'Tipo inválido. Deve ser "artists" ou "albums"' : 'Invalid type. Must be "artists" or "albums"' },
         { status: 400 }
       );
     }
-
+    
     return NextResponse.json(data);
-  } catch (error) {
-    console.error('Error fetching Last.fm data:', error);
+  } catch (error: unknown) {
+    console.error('API error:', error);
+    
+    
+    if (error instanceof Error && error.message === 'User not found') {
+      return NextResponse.json(
+        { error: locale === 'pt-BR' ? 'Usuário não encontrado' : 'User not found' },
+        { status: 404 }
+      );
+    }
+    
     return NextResponse.json(
-      { error: 'Failed to fetch data from Last.fm' },
+      { error: locale === 'pt-BR' ? 'Erro ao buscar dados' : 'Error fetching data' },
       { status: 500 }
     );
   }

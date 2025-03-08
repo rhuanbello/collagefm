@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "title": "LastMosaic - Crie suas colagens musicais do Last.fm",
+    "description": "Gere belas colagens dos seus artistas e álbuns favoritos do Last.fm."
+  },
+  "common": {
+    "lastmosaic": "LastMosaic",
+    "by": "por",
+    "plays": "reproduções",
+    "generatedWith": "Gerado com",
+    "apply": "Aplicar",
+    "cancel": "Cancelar",
+    "loading": "Carregando...",
+    "processing": "Processando...",
+    "downloading": "Baixando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "back": "Voltar",
+    "save": "Salvar",
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema",
+    "backToHome": "Voltar para o Início",
+    "backToForm": "Voltar para o Formulário",
+    "tryAgain": "Tentar Novamente",
+    "language": {
+      "en": "Inglês",
+      "pt-BR": "Português Brasileiro"
+    }
+  },
+  "home": {
+    "tagline": "Crie belas colagens musicais a partir de seus dados do Last.fm",
+    "generateButton": "Gerar Colagem",
+    "title": "LastMosaic",
+    "cta": "Gerar sua colagem"
+  },
+  "form": {
+    "username": {
+      "label": "Usuário do Last.fm",
+      "placeholder": "Digite seu usuário do Last.fm",
+      "description": "Seu nome de usuário do Last.fm para buscar dados musicais",
+      "required": "Nome de usuário é obrigatório",
+      "tooShort": "Nome de usuário deve ter pelo menos 2 caracteres",
+      "tooLong": "Nome de usuário deve ter menos de 30 caracteres",
+      "invalid": "Nome de usuário pode conter apenas letras, números e - _ .",
+      "notFound": "Usuário do Last.fm não encontrado"
+    },
+    "type": {
+      "label": "Tipo de Colagem",
+      "description": "Escolha entre os álbuns ou artistas mais ouvidos",
+      "options": {
+        "albums": "Álbuns",
+        "artists": "Artistas"
+      }
+    },
+    "period": {
+      "label": "Período de Tempo",
+      "description": "Selecione o período para suas músicas mais ouvidas",
+      "options": {
+        "1week": "Últimos 7 dias",
+        "1month": "Último mês",
+        "3month": "Últimos 3 meses",
+        "6month": "Últimos 6 meses",
+        "12month": "Últimos 12 meses",
+        "overall": "Todo o período"
+      }
+    },
+    "gridSize": {
+      "label": "Tamanho da Grade",
+      "description": "Selecione o tamanho da grade da sua colagem",
+      "options": {
+        "3x3": "3×3 (9 itens)",
+        "4x4": "4×4 (16 itens)",
+        "5x5": "5×5 (25 itens)",
+        "10x10": "10×10 (100 itens)"
+      }
+    },
+    "submit": "Gerar Colagem",
+    "submitting": "Gerando..."
+  },
+  "collage": {
+    "title": "Top {type} de {username}",
+    "topArtists": "Artistas",
+    "topAlbums": "Álbuns",
+    "noData": "Nenhum dado encontrado para este usuário com as opções selecionadas",
+    "backToForm": "Voltar para o Formulário",
+    "downloadCollage": "Baixar Colagem",
+    "downloadOptions": {
+      "title": "Opções de Download",
+      "subtitle": "Personalize sua exportação de colagem",
+      "showTitle": "Mostrar títulos",
+      "showPlayCount": "Mostrar número de reproduções",
+      "applyDownload": "Baixar"
+    },
+    "noImage": "Sem imagem"
+  },
+  "errors": {
+    "invalidUsername": "Usuário do Last.fm inválido",
+    "usernameRequired": "O usuário é obrigatório",
+    "failedToFetch": "Falha ao buscar dados do Last.fm",
+    "failedToGenerate": "Falha ao gerar colagem",
+    "generalError": "Ocorreu um erro. Por favor, tente novamente.",
+    "noUsername": "Nenhum usuário fornecido",
+    "failedToLoad": "Falha ao carregar os dados da colagem. Por favor, tente novamente.",
+    "pageNotFound": "Página Não Encontrada",
+    "pageNotFoundDesc": "A página que você está procurando não existe ou foi movida.",
+    "failedToGenerateImage": "Falha ao gerar imagem da colagem. Por favor, tente novamente.",
+    "somethingWentWrong": "Algo Deu Errado",
+    "errorOccurred": "Ocorreu um erro. Você pode tentar novamente ou voltar para a página inicial."
+  },
+  "pluralization": {
+    "plays": {
+      "one": "{count} reprodução",
+      "other": "{count} reproduções"
+    }
+  },
+  "dates": {
+    "format": "DD/MM/YYYY"
+  }
+} 

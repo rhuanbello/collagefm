@@ -4,9 +4,10 @@ import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import html2canvas from 'html2canvas-pro';
-import { PERIODS } from '@/lib/lastfm';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
+import { formatNumber } from '@/lib/i18n';
 
 interface CollageItem {
   name: string;
@@ -29,6 +30,7 @@ interface CollageContainerProps {
   period: string;
   gridSize: string;
   type: string;
+  locale: string;
 }
 
 export default function CollageContainer({ 
@@ -36,8 +38,10 @@ export default function CollageContainer({
   username, 
   period, 
   gridSize, 
-  type 
+  type,
+  locale
 }: CollageContainerProps) {
+  const t = useTranslations();
   const router = useRouter();
   const [isDownloading, setIsDownloading] = useState(false);
   const [collageData] = useState<CollageData>(initialData);
@@ -51,8 +55,8 @@ export default function CollageContainer({
 
   useEffect(() => {
     setMounted(true);
-    setDateString(new Date().toLocaleDateString());
-  }, []);
+    setDateString(new Date().toLocaleDateString(locale === 'en' ? 'en-US' : 'pt-BR'));
+  }, [locale]);
 
   const getGridColumns = () => {
     const [cols] = gridSize.split('x');
@@ -66,7 +70,7 @@ export default function CollageContainer({
   };
 
   const handleBack = () => {
-    router.push('/');
+    router.push(`/${locale}`);
   };
   
   const openDownloadOptions = () => {
@@ -123,7 +127,10 @@ export default function CollageContainer({
       headerDiv.style.zIndex = '1';
       
       const title = document.createElement('h1');
-      title.textContent = `${collageData.username}'s Top ${collageData.type === 'artists' ? 'Artists' : 'Albums'}`;
+      title.textContent = t('collage.title', { 
+        username: collageData.username, 
+        type: t(`collage.top${type === 'artists' ? 'Artists' : 'Albums'}`)
+      });
       title.style.fontSize = '36px';
       title.style.fontWeight = 'bold';
       title.style.marginBottom = '8px';
@@ -134,7 +141,7 @@ export default function CollageContainer({
       headerDiv.appendChild(title);
       
       const subtitle = document.createElement('p');
-      subtitle.textContent = `${PERIODS[collageData.period as keyof typeof PERIODS]} • ${collageData.gridSize} grid`;
+      subtitle.textContent = `${t(`form.period.options.${period}`)}`;
       subtitle.style.fontSize = '16px';
       subtitle.style.color = document.documentElement.classList.contains('dark') ? '#d1d5db' : '#4b5563';
       headerDiv.appendChild(subtitle);
@@ -182,7 +189,7 @@ export default function CollageContainer({
             : 'linear-gradient(to bottom right, #e5e7eb, #d1d5db)';
           
           const fallbackText = document.createElement('span');
-          fallbackText.textContent = 'No image';
+          fallbackText.textContent = t('collage.noImage');
           fallbackText.style.color = document.documentElement.classList.contains('dark')
             ? '#6b7280'
             : '#9ca3af';
@@ -217,7 +224,7 @@ export default function CollageContainer({
             
             if (item.artist) {
               const artist = document.createElement('p');
-              artist.textContent = `by ${item.artist}`;
+              artist.textContent = `${t('common.by')} ${item.artist}`;
               artist.style.fontSize = '10px';
               artist.style.margin = '2px 0 0';
               artist.style.padding = '0';
@@ -231,7 +238,11 @@ export default function CollageContainer({
           
           if (showPlayCount) {
             const plays = document.createElement('p');
-            plays.textContent = `${item.playcount.toLocaleString()} plays`;
+            const formattedCount = formatNumber(item.playcount, locale);
+            
+            const keyPath = item.playcount === 1 ? 'pluralization.plays.one' : 'pluralization.plays.other';
+            plays.textContent = t(keyPath, { count: formattedCount });
+            
             plays.style.fontSize = '10px';
             plays.style.margin = showTitles ? '4px 0 0' : '0';
             plays.style.padding = '0';
@@ -256,23 +267,7 @@ export default function CollageContainer({
       footer.style.zIndex = '1';
       
       const footerText = document.createElement('p');
-      footerText.textContent = `Generated with LastMosaic • ${dateString}`;
-      
-      footerText.textContent = '';
-      
-      const beforeText = document.createTextNode('Generated with ');
-      footerText.appendChild(beforeText);
-      
-      const brandSpan = document.createElement('span');
-      brandSpan.textContent = 'LastMosaic';
-      brandSpan.style.fontWeight = '600';
-      brandSpan.style.color = document.documentElement.classList.contains('dark') 
-        ? '#8b5cf6'
-        : '#6366f1';
-      footerText.appendChild(brandSpan);
-      
-      const afterText = document.createTextNode(` • ${dateString}`);
-      footerText.appendChild(afterText);
+      footerText.textContent = `${t('common.generatedWith')} LastMosaic • ${dateString}`;
       
       footer.appendChild(footerText);
       exportContainer.appendChild(footer);
@@ -297,7 +292,7 @@ export default function CollageContainer({
       link.click();
     } catch (err) {
       console.error('Error generating download:', err);
-      alert('Failed to download collage. Please try again.');
+      alert(t('errors.failedToGenerate'));
     } finally {
       setIsDownloading(false);
     }
@@ -312,7 +307,7 @@ export default function CollageContainer({
           transition={{ duration: 0.5 }}
           className="p-6 mb-6 text-yellow-700 bg-yellow-100/80 dark:text-yellow-300 dark:bg-yellow-900/30 rounded-xl backdrop-blur-md border border-yellow-200 dark:border-yellow-800/50 shadow-lg"
         >
-          <p className="font-medium">No data found for this user and period combination.</p>
+          <p className="font-medium">{t('collage.noData')}</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0 }}
@@ -323,7 +318,7 @@ export default function CollageContainer({
             onClick={handleBack}
             className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-medium px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
           >
-            Back to Form
+            {t('collage.backToForm')}
           </Button>
         </motion.div>
       </div>
@@ -348,10 +343,13 @@ export default function CollageContainer({
         className="mb-8 text-center relative z-10"
       >
         <h1 className="text-4xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-          {collageData.username}&apos;s Top {collageData.type === 'artists' ? 'Artists' : 'Albums'}
+          {t('collage.title', {
+            username: collageData.username,
+            type: t(`collage.top${type === 'artists' ? 'Artists' : 'Albums'}`)
+          })}
         </h1>
         <p className="text-gray-600 dark:text-gray-300 mb-6 font-medium">
-          {PERIODS[collageData.period as keyof typeof PERIODS]} • {collageData.gridSize} grid
+          {t(`form.period.options.${collageData.period}`)} • {collageData.gridSize} grid
         </p>
 
         <div className="flex flex-wrap justify-center gap-4">
@@ -364,7 +362,7 @@ export default function CollageContainer({
               variant="outline" 
               className="px-6 py-2 rounded-full backdrop-blur-sm bg-white/80 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-medium hover:bg-white/90 dark:hover:bg-gray-800/70 shadow-sm hover:shadow transition-all duration-300"
             >
-              Back to Form
+              {t('collage.backToForm')}
             </Button>
           </motion.div>
           
@@ -380,10 +378,10 @@ export default function CollageContainer({
               {isDownloading ? (
                 <>
                   <span className="mr-2 h-4 w-4 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
-                  Downloading...
+                  {t('common.downloading')}
                 </>
               ) : (
-                'Download Collage'
+                t('collage.downloadCollage')
               )}
             </Button>
           </motion.div>
@@ -408,8 +406,8 @@ export default function CollageContainer({
               onClick={(e) => e.stopPropagation()}
             >
               <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-4">
-                <h3 className="text-white text-lg font-medium">Download Options</h3>
-                <p className="text-indigo-100 text-sm">Customize your collage</p>
+                <h3 className="text-white text-lg font-medium">{t('collage.downloadOptions.title')}</h3>
+                <p className="text-indigo-100 text-sm">{t('collage.downloadOptions.subtitle')}</p>
               </div>
               
               <div className="p-5 space-y-4">
@@ -428,7 +426,7 @@ export default function CollageContainer({
                       checked={showTitles} 
                       onChange={() => setShowTitles(!showTitles)} 
                     />
-                    <span>Show Track Title</span>
+                    <span>{t('collage.downloadOptions.showTitle')}</span>
                   </label>
                   
                   <label className="flex items-center space-x-3 text-gray-700 dark:text-gray-200 cursor-pointer p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors select-none">
@@ -445,7 +443,7 @@ export default function CollageContainer({
                       checked={showPlayCount} 
                       onChange={() => setShowPlayCount(!showPlayCount)} 
                     />
-                    <span>Show Play Count</span>
+                    <span>{t('collage.downloadOptions.showPlayCount')}</span>
                   </label>
                 </div>
                 
@@ -456,7 +454,7 @@ export default function CollageContainer({
                     className="py-2 rounded-lg text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 font-medium text-sm transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-600"
                     onClick={cancelDownload}
                   >
-                    Cancel
+                    {t('common.cancel')}
                   </motion.button>
                   
                   <motion.button
@@ -465,7 +463,7 @@ export default function CollageContainer({
                     className="py-2 rounded-lg text-white font-medium text-sm bg-gradient-to-r from-indigo-500 to-purple-600 transition-all duration-200 shadow-md"
                     onClick={processDownload}
                   >
-                    Apply & Download
+                    {t('collage.downloadOptions.applyDownload')}
                   </motion.button>
                 </div>
               </div>
@@ -507,20 +505,20 @@ export default function CollageContainer({
                   />
                 ) : (
                   <div className="flex items-center justify-center w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-800 dark:to-gray-900">
-                    <span className="text-gray-500 dark:text-gray-400 text-sm">No image</span>
+                    <span className="text-gray-500 dark:text-gray-400 text-sm">{t('collage.noImage')}</span>
                   </div>
                 )}
                 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-end text-white p-4 text-center">
                   <p className="font-bold text-sm truncate w-full">{item.name}</p>
                   {item.artist && (
-                    <p className="text-xs truncate w-full opacity-90">by {item.artist}</p>
+                    <p className="text-xs truncate w-full opacity-90">{t('common.by')} {item.artist}</p>
                   )}
                   <div className="mt-2 flex items-center justify-center gap-1">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z" clipRule="evenodd" />
                     </svg>
-                    <p className="text-xs">{item.playcount.toLocaleString()} plays</p>
+                    <p className="text-xs">{formatNumber(item.playcount, locale)} {t('common.plays')}</p>
                   </div>
                 </div>
               </motion.div>
@@ -535,7 +533,7 @@ export default function CollageContainer({
         transition={{ delay: 0.8, duration: 0.5 }}
         className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400"
       >
-        <p>Collage generated with LastMosaic {mounted ? `• ${dateString}` : ''}</p>
+        <p>{t('common.generatedWith')} LastMosaic {mounted ? `• ${dateString}` : ''}</p>
       </motion.div>
     </motion.div>
   );

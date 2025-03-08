@@ -16,13 +16,13 @@ export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = React.useState(false)
 
-  // When mounted on client, now we can show the UI
+  
   React.useEffect(() => {
     setMounted(true)
   }, [])
 
   if (!mounted) {
-    return <div className="w-9 h-9" /> // Prevents layout shift
+    return <div className="w-9 h-9" /> 
   }
 
   return (

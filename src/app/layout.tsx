@@ -26,7 +26,7 @@ export default function RootLayout({
           disableTransitionOnChange
           storageKey="lastmosaic-theme"
         >
-          {/* Fixed background with gradients */}
+          
           <div className="fixed inset-0 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 -z-20"></div>
           
           <div className="fixed top-4 right-4 z-50">

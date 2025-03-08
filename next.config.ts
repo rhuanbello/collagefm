@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "lastfm.freetls.fastly.net",
       },
+      {
+        hostname: "flagcdn.com",
+      },
     ],
   },
 };

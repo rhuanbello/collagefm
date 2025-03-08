@@ -1,10 +1,10 @@
 import axios from 'axios';
   
-// You need to get an API key from last.fm
+
 const API_KEY = process.env.LASTFM_API_KEY || '';
 const BASE_URL = 'https://ws.audioscrobbler.com/2.0/';
 
-// Map period strings to last.fm API values
+
 export const PERIODS = {
   '1week': 'Last 7 days',
   '1month': 'Last 30 days',
@@ -30,16 +30,16 @@ export const GRID_SIZE_OPTIONS = [
   { value: '10x10', label: '10×10 (100 items)' },
 ];
 
-// A type for the collage grid size
+
 export type GridSize = '3x3' | '4x4' | '5x5' | '10x10';
 
-// Helper to get the number of items needed for a grid
+
 export const getGridItemsCount = (gridSize: GridSize): number => {
   const [rows, cols] = gridSize.split('x').map(Number);
   return rows * cols;
 };
 
-// API request wrapper
+
 const fetchFromLastFM = async (params: Record<string, string>) => {
   try {
     const response = await axios.get(BASE_URL, {
@@ -56,35 +56,7 @@ const fetchFromLastFM = async (params: Record<string, string>) => {
   }
 };
 
-// Get top artists for a user
-export const getTopArtists = async (
-  username: string,
-  period: string = 'overall',
-  limit: number = 50
-) => {
-  return fetchFromLastFM({
-    method: 'user.gettopartists',
-    user: username,
-    period,
-    limit: limit.toString(),
-  });
-};
 
-// Get top albums for a user
-export const getTopAlbums = async (
-  username: string,
-  period: string = 'overall',
-  limit: number = 50
-) => {
-  return fetchFromLastFM({
-    method: 'user.gettopalbums',
-    user: username,
-    period,
-    limit: limit.toString(),
-  });
-};
-
-// Helper to validate a last.fm username
 export const validateLastFMUsername = async (username: string): Promise<boolean> => {
   try {
     await fetchFromLastFM({
@@ -95,4 +67,143 @@ export const validateLastFMUsername = async (username: string): Promise<boolean>
   } catch {
     return false;
   }
-}; 
+};
+
+interface LastFmArtist {
+  name: string;
+  playcount: string;
+  image: { '#text': string; size: string }[];
+}
+
+interface LastFmAlbum {
+  name: string;
+  artist: {
+    name: string;
+  };
+  playcount: string;
+  image: { '#text': string; size: string }[];
+}
+
+export interface CollageItem {
+  name: string;
+  artist?: string;
+  playcount: number;
+  imageUrl: string;
+}
+
+export interface CollageData {
+  username: string;
+  period: string;
+  type: string;
+  gridSize: string;
+  items: CollageItem[];
+}
+
+function getLimit(gridSize: string): number {
+  switch (gridSize) {
+    case '3x3': return 9;
+    case '4x4': return 16;
+    case '5x5': return 25;
+    case '10x10': return 100;
+    default: return 9;
+  }
+}
+
+
+export async function fetchAlbumCollageData(username: string, period: string, gridSize: string): Promise<CollageData> {
+  try {
+    const limit = getLimit(gridSize);
+    
+    const params = new URLSearchParams({
+      method: 'user.getTopAlbums',
+      user: username,
+      period: period,
+      limit: limit.toString(),
+      api_key: API_KEY,
+      format: 'json'
+    });
+
+    const response = await fetch(`${BASE_URL}?${params.toString()}`);
+    
+    if (!response.ok) {
+      const data = await response.json();
+      if (data.error === 6) {
+        throw new Error('User not found');
+      }
+      throw new Error(`API error: ${data.message || response.statusText}`);
+    }
+    
+    const data = await response.json();
+    
+    if (!data.topalbums || !data.topalbums.album) {
+      throw new Error('Invalid response format');
+    }
+    
+    const items: CollageItem[] = data.topalbums.album.map((album: LastFmAlbum) => ({
+      name: album.name,
+      artist: album.artist.name,
+      playcount: parseInt(album.playcount, 10),
+      imageUrl: album.image[3]['#text'] || '' 
+    }));
+    
+    return {
+      username,
+      period,
+      type: 'albums',
+      gridSize,
+      items
+    };
+  } catch (error) {
+    console.error('Error fetching top albums:', error);
+    throw error;
+  }
+}
+
+
+export async function fetchArtistCollageData(username: string, period: string, gridSize: string): Promise<CollageData> {
+  try {
+    const limit = getLimit(gridSize);
+    
+    const params = new URLSearchParams({
+      method: 'user.getTopArtists',
+      user: username,
+      period: period,
+      limit: limit.toString(),
+      api_key: API_KEY,
+      format: 'json'
+    });
+
+    const response = await fetch(`${BASE_URL}?${params.toString()}`);
+    
+    if (!response.ok) {
+      const data = await response.json();
+      if (data.error === 6) {
+        throw new Error('User not found');
+      }
+      throw new Error(`API error: ${data.message || response.statusText}`);
+    }
+    
+    const data = await response.json();
+    
+    if (!data.topartists || !data.topartists.artist) {
+      throw new Error('Invalid response format');
+    }
+    
+    const items: CollageItem[] = data.topartists.artist.map((artist: LastFmArtist) => ({
+      name: artist.name,
+      playcount: parseInt(artist.playcount, 10),
+      imageUrl: artist.image[3]['#text'] || '' 
+    }));
+    
+    return {
+      username,
+      period,
+      type: 'artists',
+      gridSize,
+      items
+    };
+  } catch (error) {
+    console.error('Error fetching top artists:', error);
+    throw error;
+  }
+} 
