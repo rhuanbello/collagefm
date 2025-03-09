@@ -23,24 +23,186 @@
     "light": "Claro",
     "dark": "Escuro",
     "system": "Sistema",
-    "backToHome": "Voltar para o Início",
-    "backToForm": "Voltar para o Formulário",
+    "backToHome": "Voltar para Início",
+    "backToForm": "Voltar para Formulário",
     "tryAgain": "Tentar Novamente",
     "language": {
       "en": "Inglês",
-      "pt-BR": "Português Brasileiro"
+      "pt-BR": "Português"
     }
   },
   "home": {
-    "tagline": "Crie belas colagens musicais a partir de seus dados do Last.fm",
+    "tagline": "Crie belas colagens musicais a partir do seu Last.fm",
     "generateButton": "Gerar Colagem",
     "title": "Collage.fm",
-    "cta": "Gerar sua colagem"
+    "cta": "Gere sua colagem",
+    "footer": {
+      "buyMeACoffee": "Compre-me um café",
+      "builtWith": "Desenvolvido com Next.js e a API do Last.fm por",
+      "viewOnGitHub": "Ver no GitHub",
+      "copyright": "© {year} Collage.fm. Todos os direitos reservados.",
+      "menu": {
+        "about": "Sobre",
+        "privacy": "Política de Privacidade",
+        "sitemap": "Mapa do Site"
+      }
+    }
+  },
+  "about": {
+    "title": "Sobre o Collage.fm",
+    "subtitle": "Crie belas representações visuais do seu gosto musical",
+    "whatIs": {
+      "title": "O que é o Collage.fm?",
+      "description": "Collage.fm é uma aplicação web gratuita que permite criar belas colagens visuais baseadas no seu histórico de reproduções do Last.fm. Seja para mostrar seus álbuns mais ouvidos na última semana ou seus artistas favoritos de todos os tempos, o Collage.fm facilita a geração e compartilhamento de grades musicais personalizadas."
+    },
+    "features": {
+      "title": "Principais Recursos",
+      "gridSizes": {
+        "title": "Múltiplos Tamanhos de Grade",
+        "description": "Escolha entre grades 3×3, 4×4, 5×5 ou 10×10 para exibir sua música."
+      },
+      "timePeriods": {
+        "title": "Seleção de Período",
+        "description": "Gere colagens baseadas no seu histórico de reproduções da última semana, mês, 3 meses, 6 meses, ano ou de todo o tempo."
+      },
+      "downloadOptions": {
+        "title": "Opções de Download Personalizáveis",
+        "description": "Inclua ou exclua títulos, contagem de reproduções e escolha a qualidade de compressão."
+      },
+      "multilingual": {
+        "title": "Suporte a Múltiplos Idiomas",
+        "description": "Disponível em inglês e português."
+      }
+    },
+    "howItWorks": {
+      "title": "Como Funciona",
+      "description": "O Collage.fm se conecta à API do Last.fm para buscar seus dados de reprodução. Quando você insere seu nome de usuário do Last.fm e seleciona suas preferências, nossa aplicação recupera seus álbuns ou artistas mais ouvidos para o período selecionado, organiza-os em uma grade e gera uma imagem para download.",
+      "steps": {
+        "username": {
+          "title": "Insira seu nome de usuário do Last.fm",
+          "description": "Conecte sua conta Last.fm fornecendo seu nome de usuário"
+        },
+        "preferences": {
+          "title": "Selecione suas preferências",
+          "description": "Escolha entre álbuns ou artistas, selecione um período e escolha um tamanho de grade"
+        },
+        "generate": {
+          "title": "Gere sua colagem",
+          "description": "Nosso aplicativo buscará seus dados e criará sua colagem personalizada"
+        },
+        "download": {
+          "title": "Baixe e compartilhe",
+          "description": "Baixe sua colagem e compartilhe nas redes sociais para mostrar seu gosto musical"
+        }
+      }
+    },
+    "technology": {
+      "title": "Tecnologia",
+      "description": "O Collage.fm é construído usando tecnologias web modernas para garantir uma experiência rápida e responsiva:",
+      "nextjs": {
+        "title": "Next.js",
+        "description": "Framework React para renderização do lado do servidor e geração de sites estáticos"
+      },
+      "typescript": {
+        "title": "TypeScript",
+        "description": "Para código com tipagem segura e melhor experiência de desenvolvimento"
+      },
+      "tailwind": {
+        "title": "Tailwind CSS",
+        "description": "Framework CSS utilitário para design responsivo"
+      },
+      "lastfmApi": {
+        "title": "API do Last.fm",
+        "description": "Para buscar dados de reprodução do usuário"
+      },
+      "framerMotion": {
+        "title": "Framer Motion",
+        "description": "Para animações e transições suaves"
+      }
+    },
+    "creator": {
+      "title": "Sobre o Criador",
+      "description1": "um desenvolvedor web e entusiasta de música. Após usar ferramentas similares no passado, Rhuan decidiu criar uma versão moderna e amigável com recursos adicionais e melhor desempenho.",
+      "description2": "O projeto é de código aberto e está disponível no GitHub. Contribuições, feedback e solicitações de recursos são bem-vindos!"
+    },
+    "buttons": {
+      "backToHome": "Voltar para Início",
+      "privacyPolicy": "Política de Privacidade"
+    }
+  },
+  "privacy": {
+    "title": "Política de Privacidade",
+    "lastUpdated": "Última atualização: 9 de março de 2024",
+    "sections": {
+      "introduction": {
+        "title": "Introdução",
+        "content": "O Collage.fm está comprometido em proteger sua privacidade. Esta Política de Privacidade explica como coletamos, usamos e protegemos suas informações quando você visita nosso site."
+      },
+      "informationCollect": {
+        "title": "Informações Que Coletamos",
+        "content": "Quando você usa o Collage.fm, coletamos os seguintes tipos de informações:",
+        "username": {
+          "title": "Nome de Usuário do Last.fm",
+          "description": "Quando você gera uma colagem, processamos temporariamente seu nome de usuário do Last.fm para buscar seus dados musicais da API do Last.fm."
+        },
+        "usageData": {
+          "title": "Dados de Uso",
+          "description": "Coletamos informações anônimas sobre como você interage com nosso site, como páginas visitadas e tempo gasto no site."
+        }
+      },
+      "howWeUse": {
+        "title": "Como Usamos Suas Informações",
+        "content": "Usamos as informações que coletamos para:",
+        "generateCollages": "Gerar colagens musicais baseadas no seu histórico de reproduções do Last.fm",
+        "improveWebsite": "Melhorar nosso site e experiência do usuário",
+        "analyzeUsage": "Analisar padrões de uso e otimizar o desempenho",
+        "noStorage": "Não armazenamos seu nome de usuário do Last.fm ou dados de reprodução em nossos servidores após o término da sua sessão. Todo o processamento de dados é temporário e usado exclusivamente para gerar sua colagem."
+      },
+      "thirdParty": {
+        "title": "Serviços de Terceiros",
+        "content": "O Collage.fm utiliza os seguintes serviços de terceiros:",
+        "lastfmApi": {
+          "title": "API do Last.fm",
+          "description": "Acessamos a API do Last.fm para recuperar seus dados de reprodução musical."
+        },
+        "vercel": {
+          "title": "Vercel",
+          "description": "Nosso site é hospedado na Vercel, que pode coletar dados de uso anônimos e logs."
+        }
+      },
+      "cookies": {
+        "title": "Cookies e Rastreamento",
+        "content": "O Collage.fm usa cookies mínimos que são necessários para o funcionamento adequado do site. Esses cookies não rastreiam informações pessoais e são usados apenas para melhorar sua experiência."
+      },
+      "security": {
+        "title": "Segurança de Dados",
+        "content": "Implementamos medidas de segurança apropriadas para proteger contra acesso não autorizado, alteração, divulgação ou destruição de suas informações."
+      },
+      "rights": {
+        "title": "Seus Direitos",
+        "content": "Você tem o direito de:",
+        "access": "Acessar as informações pessoais que temos sobre você",
+        "correct": "Solicitar que corrijamos ou excluamos qualquer informação pessoal que temos sobre você",
+        "object": "Objetar ao nosso processamento de suas informações pessoais",
+        "restrict": "Solicitar que restrinjamos o processamento de suas informações pessoais"
+      },
+      "changes": {
+        "title": "Alterações Nesta Política de Privacidade",
+        "content": "Podemos atualizar nossa Política de Privacidade de tempos em tempos. Notificaremos você sobre quaisquer alterações publicando a nova Política de Privacidade nesta página."
+      },
+      "contact": {
+        "title": "Contate-nos",
+        "content": "Se você tiver dúvidas sobre esta Política de Privacidade, entre em contato conosco via GitHub em https://github.com/rhuanbello/collagefm."
+      }
+    },
+    "buttons": {
+      "backToHome": "Voltar para Início"
+    }
   },
   "form": {
     "username": {
-      "label": "Usuário do Last.fm",
-      "placeholder": "Digite seu usuário do Last.fm",
+      "label": "Nome de Usuário do Last.fm",
+      "placeholder": "Digite seu nome de usuário do Last.fm",
       "description": "Seu nome de usuário do Last.fm para buscar dados musicais",
       "required": "Nome de usuário é obrigatório",
       "tooShort": "Nome de usuário deve ter pelo menos 2 caracteres",
@@ -50,32 +212,32 @@
     },
     "type": {
       "label": "Tipo de Colagem",
-      "description": "Escolha entre os álbuns ou artistas mais ouvidos",
+      "description": "Escolha entre álbuns ou artistas mais ouvidos",
       "options": {
         "albums": "Álbuns",
         "artists": "Artistas"
       }
     },
     "period": {
-      "label": "Período de Tempo",
-      "description": "Selecione o período para suas músicas mais ouvidas",
+      "label": "Período",
+      "description": "Selecione o período para sua música mais ouvida",
       "options": {
         "7day": "Últimos 7 dias",
         "1month": "Último mês",
         "3month": "Últimos 3 meses",
         "6month": "Últimos 6 meses",
         "12month": "Últimos 12 meses",
-        "overall": "Todo o período"
+        "overall": "Todo o tempo"
       }
     },
     "gridSize": {
       "label": "Tamanho da Grade",
-      "description": "Selecione o tamanho da grade da sua colagem",
+      "description": "Selecione o tamanho da sua grade de colagem",
       "options": {
-        "3x3": "3x3 (9 itens)",
-        "4x4": "4x4 (16 itens)",
-        "5x5": "5x5 (25 itens)",
-        "10x10": "10x10 (100 itens)"
+        "3x3": "3×3 (9 itens)",
+        "4x4": "4×4 (16 itens)",
+        "5x5": "5×5 (25 itens)",
+        "10x10": "10×10 (100 itens)"
       }
     },
     "submit": "Gerar Colagem",
@@ -86,38 +248,37 @@
     "topArtists": "Artistas",
     "topAlbums": "Álbuns",
     "noData": "Nenhum dado encontrado para este usuário com as opções selecionadas",
-    "backToForm": "Voltar para o Formulário",
+    "backToForm": "Voltar para Formulário",
     "downloadCollage": "Baixar Colagem",
     "noImage": "Sem imagem",
     "downloadOptions": "Opções de Download",
     "showTitles": "Mostrar títulos",
-    "showPlayCount": "Mostrar número de reproduções",
+    "showPlayCount": "Mostrar contagem de reproduções",
     "showStyles": "Mostrar estilos",
     "compressionLevel": "Nível de Compressão",
     "compressionHigh": "Alta Qualidade",
     "compressionMedium": "Média",
     "compressionLow": "Baixa",
-    "compressionUltraLow": "Muito Baixa",
+    "compressionUltraLow": "Ultra Baixa",
     "compressionTiny": "Mínima",
     "bestQuality": "Melhor qualidade mas arquivo maior",
-    "balanced": "Equilíbrio entre qualidade e tamanho",
-    "smallerFile": "Arquivo menor (~500KB)",
+    "balanced": "Qualidade e tamanho equilibrados",
+    "smallerFile": "Tamanho de arquivo menor (~500KB)",
     "verySmallFile": "Arquivo muito pequeno (~300KB)",
-    "minimumSize": "Tamanho mínimo (~100KB)"
+    "minimumSize": "Tamanho mínimo de arquivo (~100KB)"
   },
   "errors": {
-    "invalidUsername": "Usuário do Last.fm inválido",
-    "usernameRequired": "O usuário é obrigatório",
+    "invalidUsername": "Nome de usuário do Last.fm inválido",
+    "usernameRequired": "Nome de usuário é obrigatório",
     "failedToFetch": "Falha ao buscar dados do Last.fm",
     "failedToGenerate": "Falha ao gerar colagem",
     "generalError": "Ocorreu um erro. Por favor, tente novamente.",
-    "noUsername": "Nenhum usuário fornecido",
-    "failedToLoad": "Falha ao carregar os dados da colagem. Por favor, tente novamente.",
+    "noUsername": "Nenhum nome de usuário fornecido. Por favor, insira um nome de usuário do Last.fm para gerar uma colagem.",
+    "failedToLoad": "Falha ao carregar dados. Por favor, tente novamente ou verifique seu nome de usuário do Last.fm.",
     "pageNotFound": "Página Não Encontrada",
     "pageNotFoundDesc": "A página que você está procurando não existe ou foi movida.",
-    "failedToGenerateImage": "Falha ao gerar imagem da colagem. Por favor, tente novamente.",
     "somethingWentWrong": "Algo Deu Errado",
-    "errorOccurred": "Ocorreu um erro. Você pode tentar novamente ou voltar para a página inicial."
+    "errorOccurred": "Ocorreu um erro. Você pode tentar novamente ou retornar à página inicial."
   },
   "pluralization": {
     "plays": {

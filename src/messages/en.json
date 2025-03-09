@@ -35,7 +35,169 @@
     "tagline": "Create beautiful music collages from your Last.fm",
     "generateButton": "Generate Collage",
     "title": "Collage.fm",
-    "cta": "Generate your collage"
+    "cta": "Generate your collage",
+    "footer": {
+      "buyMeACoffee": "Buy me a coffee",
+      "builtWith": "Built with Next.js and the Last.fm API by",
+      "viewOnGitHub": "View on GitHub",
+      "copyright": "© {year} Collage.fm. All rights reserved.",
+      "menu": {
+        "about": "About",
+        "privacy": "Privacy Policy",
+        "sitemap": "Sitemap"
+      }
+    }
+  },
+  "about": {
+    "title": "About Collage.fm",
+    "subtitle": "Create beautiful visual representations of your music taste",
+    "whatIs": {
+      "title": "What is Collage.fm?",
+      "description": "Collage.fm is a free web application that lets you create beautiful visual collages based on your Last.fm listening history. Whether you want to showcase your top albums from the past week or your all-time favorite artists, Collage.fm makes it easy to generate and share personalized music grids."
+    },
+    "features": {
+      "title": "Key Features",
+      "gridSizes": {
+        "title": "Multiple Grid Sizes",
+        "description": "Choose from 3×3, 4×4, 5×5, or 10×10 grids to showcase your music."
+      },
+      "timePeriods": {
+        "title": "Time Period Selection",
+        "description": "Generate collages based on your listening history from the last week, month, 3 months, 6 months, year, or all time."
+      },
+      "downloadOptions": {
+        "title": "Customizable Download Options",
+        "description": "Include or exclude titles, play counts, and choose compression quality."
+      },
+      "multilingual": {
+        "title": "Multi-Language Support",
+        "description": "Available in English and Portuguese."
+      }
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "description": "Collage.fm connects to the Last.fm API to fetch your listening data. When you enter your Last.fm username and select your preferences, our application retrieves your top albums or artists for the selected time period, arranges them in a grid, and generates a downloadable image.",
+      "steps": {
+        "username": {
+          "title": "Enter your Last.fm username",
+          "description": "Connect your Last.fm account by providing your username"
+        },
+        "preferences": {
+          "title": "Select your preferences",
+          "description": "Choose between albums or artists, select a time period, and pick a grid size"
+        },
+        "generate": {
+          "title": "Generate your collage",
+          "description": "Our app will fetch your data and create your personalized collage"
+        },
+        "download": {
+          "title": "Download and share",
+          "description": "Download your collage and share it on social media to show off your music taste"
+        }
+      }
+    },
+    "technology": {
+      "title": "Technology",
+      "description": "Collage.fm is built using modern web technologies to ensure a fast, responsive experience:",
+      "nextjs": {
+        "title": "Next.js",
+        "description": "React framework for server-side rendering and static site generation"
+      },
+      "typescript": {
+        "title": "TypeScript",
+        "description": "For type-safe code and better developer experience"
+      },
+      "tailwind": {
+        "title": "Tailwind CSS",
+        "description": "Utility-first CSS framework for responsive design"
+      },
+      "lastfmApi": {
+        "title": "Last.fm API",
+        "description": "To fetch user listening data"
+      },
+      "framerMotion": {
+        "title": "Framer Motion",
+        "description": "For smooth animations and transitions"
+      }
+    },
+    "creator": {
+      "title": "About the Creator",
+      "description1": "a web developer and music enthusiast. After using similar tools in the past, Rhuan decided to create a modern, user-friendly version with additional features and better performance.",
+      "description2": "The project is open source and available on GitHub. Contributions, feedback, and feature requests are welcome!"
+    },
+    "buttons": {
+      "backToHome": "Back to Home",
+      "privacyPolicy": "Privacy Policy"
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: March 9, 2024",
+    "sections": {
+      "introduction": {
+        "title": "Introduction",
+        "content": "Collage.fm is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website."
+      },
+      "informationCollect": {
+        "title": "Information We Collect",
+        "content": "When you use Collage.fm, we collect the following types of information:",
+        "username": {
+          "title": "Last.fm Username",
+          "description": "When you generate a collage, we temporarily process your Last.fm username to fetch your music data from Last.fm's API."
+        },
+        "usageData": {
+          "title": "Usage Data",
+          "description": "We collect anonymous information about how you interact with our website, such as pages visited and time spent on the site."
+        }
+      },
+      "howWeUse": {
+        "title": "How We Use Your Information",
+        "content": "We use the information we collect to:",
+        "generateCollages": "Generate music collages based on your Last.fm listening history",
+        "improveWebsite": "Improve our website and user experience",
+        "analyzeUsage": "Analyze usage patterns and optimize performance",
+        "noStorage": "We do not store your Last.fm username or listening data on our servers after your session ends. All data processing is temporary and used solely to generate your collage."
+      },
+      "thirdParty": {
+        "title": "Third-Party Services",
+        "content": "Collage.fm uses the following third-party services:",
+        "lastfmApi": {
+          "title": "Last.fm API",
+          "description": "We access the Last.fm API to retrieve your music listening data."
+        },
+        "vercel": {
+          "title": "Vercel",
+          "description": "Our website is hosted on Vercel, which may collect anonymous usage data and logs."
+        }
+      },
+      "cookies": {
+        "title": "Cookies and Tracking",
+        "content": "Collage.fm uses minimal cookies that are necessary for the website to function properly. These cookies do not track personal information and are used only to enhance your experience."
+      },
+      "security": {
+        "title": "Data Security",
+        "content": "We implement appropriate security measures to protect against unauthorized access, alteration, disclosure, or destruction of your information."
+      },
+      "rights": {
+        "title": "Your Rights",
+        "content": "You have the right to:",
+        "access": "Access the personal information we have about you",
+        "correct": "Request that we correct or delete any personal information we have about you",
+        "object": "Object to our processing of your personal information",
+        "restrict": "Request that we restrict processing of your personal information"
+      },
+      "changes": {
+        "title": "Changes to This Privacy Policy",
+        "content": "We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page."
+      },
+      "contact": {
+        "title": "Contact Us",
+        "content": "If you have any questions about this Privacy Policy, please contact us via GitHub at https://github.com/rhuanbello/collagefm."
+      }
+    },
+    "buttons": {
+      "backToHome": "Back to Home"
+    }
   },
   "form": {
     "username": {

@@ -201,6 +201,8 @@ export default function CollageForm() {
                 </FormItem>
               )}
             />
+
+
           </motion.div>
 
           <motion.div 
@@ -352,6 +354,9 @@ export default function CollageForm() {
             </Button>
           </motion.div>
         </form>
+
+       
+   
       </Form>
     </motion.div>
   );

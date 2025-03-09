@@ -456,4 +456,68 @@ export default function CollageContainer({
       </motion.div>
     </motion.div>
   );
+}
+
+// Add MusicCollageJsonLd component for structured data
+interface MusicCollageJsonLdProps {
+  username: string;
+  period: string;
+  type: string;
+  items: Array<{
+    name: string;
+    url: string;
+    artist?: string;
+    image?: Array<{
+      '#text': string;
+      size: string;
+    }>;
+  }>;
+}
+
+export function MusicCollageJsonLd({ username, period, type, items }: MusicCollageJsonLdProps) {
+  // Early return if we don't have data
+  if (!items || items.length === 0) return null;
+
+  // Get formatted time period for display
+  const getPeriodName = (period: string): string => {
+    switch(period) {
+      case '7day': return 'Last 7 days';
+      case '1month': return 'Last month';
+      case '3month': return 'Last 3 months';
+      case '6month': return 'Last 6 months';
+      case '12month': return 'Last 12 months';
+      case 'overall': return 'All time';
+      default: return 'All time';
+    }
+  };
+
+  // Create JSON-LD structured data
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    'name': `${username}'s Top ${type === 'albums' ? 'Albums' : 'Artists'} - ${getPeriodName(period)}`,
+    'description': `A visual collage of ${username}'s most listened ${type} on Last.fm for ${getPeriodName(period).toLowerCase()}.`,
+    'url': typeof window !== 'undefined' ? window.location.href : '',
+    'numberOfItems': items.length,
+    'itemListElement': items.map((item, index: number) => ({
+      '@type': type === 'albums' ? 'MusicAlbum' : 'MusicGroup',
+      'position': index + 1,
+      'name': item.name,
+      'url': item.url,
+      ...(type === 'albums' && {
+        'byArtist': {
+          '@type': 'MusicGroup',
+          'name': item.artist
+        }
+      }),
+      'image': item.image?.[3]?.['#text'] || ''
+    }))
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
 } 

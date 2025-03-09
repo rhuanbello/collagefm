@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Allow all bots to index the site
+Sitemap: https://collagefm.vercel.app/sitemap.xml 

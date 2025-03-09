@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://collagefm.vercel.app/en</loc>
+    <lastmod>2024-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://collagefm.vercel.app/en"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://collagefm.vercel.app/pt-BR"/>
+  </url>
+  <url>
+    <loc>https://collagefm.vercel.app/pt-BR</loc>
+    <lastmod>2024-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://collagefm.vercel.app/en"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://collagefm.vercel.app/pt-BR"/>
+  </url>
+  <url>
+    <loc>https://collagefm.vercel.app/en/about</loc>
+    <lastmod>2024-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://collagefm.vercel.app/en/about"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://collagefm.vercel.app/pt-BR/about"/>
+  </url>
+  <url>
+    <loc>https://collagefm.vercel.app/pt-BR/about</loc>
+    <lastmod>2024-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://collagefm.vercel.app/en/about"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://collagefm.vercel.app/pt-BR/about"/>
+  </url>
+  <url>
+    <loc>https://collagefm.vercel.app/en/collage</loc>
+    <lastmod>2024-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://collagefm.vercel.app/en/collage"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://collagefm.vercel.app/pt-BR/collage"/>
+  </url>
+  <url>
+    <loc>https://collagefm.vercel.app/pt-BR/collage</loc>
+    <lastmod>2024-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://collagefm.vercel.app/en/collage"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://collagefm.vercel.app/pt-BR/collage"/>
+  </url>
+  <url>
+    <loc>https://collagefm.vercel.app/en/privacy</loc>
+    <lastmod>2024-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://collagefm.vercel.app/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://collagefm.vercel.app/pt-BR/privacy"/>
+  </url>
+  <url>
+    <loc>https://collagefm.vercel.app/pt-BR/privacy</loc>
+    <lastmod>2024-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://collagefm.vercel.app/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://collagefm.vercel.app/pt-BR/privacy"/>
+  </url>
+</urlset> 
