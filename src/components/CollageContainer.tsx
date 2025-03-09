@@ -3,13 +3,15 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import html2canvas from 'html2canvas-pro';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { formatNumber } from '@/lib/i18n';
 import { Logo } from '@/components/svg/Logo';
 import { PERIODS } from '@/lib/lastfm';
+import { downloadCollageImage } from '@/utils/imageDownloader';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
 interface CollageItem {
   name: string;
   artist?: string;
@@ -34,14 +36,12 @@ interface CollageContainerProps {
   locale: string;
 }
 
-export default function CollageContainer({ 
-  initialData, 
-  username, 
-  period, 
-  gridSize, 
+export default function CollageContainer({
+  initialData,
+  gridSize,
   type,
   locale
-}: CollageContainerProps) {
+}: Omit<CollageContainerProps, 'username' | 'period'>) {
   const t = useTranslations();
   const router = useRouter();
   const [isDownloading, setIsDownloading] = useState(false);
@@ -54,6 +54,8 @@ export default function CollageContainer({
   const [showTitles, setShowTitles] = useState(true);
   const [showPlayCount, setShowPlayCount] = useState(true);
   const [showStyles, setShowStyles] = useState(true);
+  const [compressionLevel, setCompressionLevel] = useState<string>('low');
+  const [downloadProgress, setDownloadProgress] = useState<string>('');
 
   useEffect(() => {
     setMounted(true);
@@ -93,262 +95,43 @@ export default function CollageContainer({
     
     try {
       setIsDownloading(true);
+      setDownloadProgress(t('common.processing'));
       
-      const exportWrapper = document.createElement('div');
-      exportWrapper.style.position = 'fixed';
-      exportWrapper.style.top = '-9999px';
-      exportWrapper.style.left = '-9999px';
-      document.body.appendChild(exportWrapper);
+      const tFn = t as unknown as (key: string, params?: Record<string, string | number | undefined>) => string;
       
-      const exportContainer = document.createElement('div');
-      
-      if (showStyles) {
-        // Set styling for regular collage with styling
-        exportContainer.style.width = '1200px';
-        exportContainer.style.padding = '40px';
-        exportContainer.style.backgroundColor = document.documentElement.classList.contains('dark') 
-          ? '#111827' 
-          : '#f8fafc';
-        exportContainer.style.borderRadius = '16px';
-        exportContainer.style.overflow = 'hidden';
-        exportContainer.style.position = 'relative';
-        
-        const gradientOverlay = document.createElement('div');
-        gradientOverlay.style.position = 'absolute';
-        gradientOverlay.style.top = '0';
-        gradientOverlay.style.left = '0';
-        gradientOverlay.style.width = '100%';
-        gradientOverlay.style.height = '100%';
-        gradientOverlay.style.opacity = '0.08';
-        gradientOverlay.style.background = document.documentElement.classList.contains('dark')
-          ? 'radial-gradient(circle at top right, rgba(124, 58, 237, 0.5), transparent 70%), radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.5), transparent 70%)'
-          : 'radial-gradient(circle at top right, rgba(124, 58, 237, 0.3), transparent 70%), radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.3), transparent 70%)';
-        exportContainer.appendChild(gradientOverlay);
-        
-        const headerDiv = document.createElement('div');
-        headerDiv.style.marginBottom = '30px';
-        headerDiv.style.textAlign = 'center';
-        headerDiv.style.position = 'relative';
-        headerDiv.style.zIndex = '1';
-        
-        // Create title container for flexbox layout
-        const titleContainer = document.createElement('div');
-        titleContainer.style.display = 'flex';
-        titleContainer.style.alignItems = 'center';
-        titleContainer.style.justifyContent = 'center';
-        titleContainer.style.gap = '8px';
-        titleContainer.style.marginBottom = '8px';
-        
-        const title = document.createElement('h1');
-        title.textContent = t('collage.title', { 
-          username: collageData.username, 
-          type: t(`collage.top${type === 'artists' ? 'Artists' : 'Albums'}`)
-        });
-        title.style.fontSize = '36px';
-        title.style.fontWeight = 'bold';
-        title.style.color = document.documentElement.classList.contains('dark') 
-          ? '#6366f1'
-          : '#4f46e5';
-        
-        titleContainer.appendChild(title);
-        headerDiv.appendChild(titleContainer);
-        
-        const subtitle = document.createElement('p');
-        subtitle.textContent = `${t(`form.period.options.${period as keyof typeof PERIODS}`)}`;
-        subtitle.style.fontSize = '16px';
-        subtitle.style.color = document.documentElement.classList.contains('dark') ? '#d1d5db' : '#4b5563';
-        headerDiv.appendChild(subtitle);
-        
-        exportContainer.appendChild(headerDiv);
-      } else {
-        // Simple container for pure collage
-        exportContainer.style.width = showStyles ? '1200px' : '1200px';
-        exportContainer.style.padding = '0';
-        exportContainer.style.overflow = 'hidden';
-        exportContainer.style.position = 'relative';
-      }
-      
-      const gridDiv = document.createElement('div');
-      gridDiv.style.display = 'grid';
-      
-      const [cols] = gridSize.split('x');
-      gridDiv.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
-      gridDiv.style.gap = '0';
-      
-      if (showStyles) {
-        gridDiv.style.border = document.documentElement.classList.contains('dark')
-          ? '1px solid rgba(255, 255, 255, 0.1)'
-          : '1px solid rgba(0, 0, 0, 0.1)';
-        gridDiv.style.borderRadius = '12px';
-        gridDiv.style.overflow = 'hidden';
-        gridDiv.style.boxShadow = document.documentElement.classList.contains('dark')
-          ? '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2)'
-          : '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
-      }
-      
-      collageData.items.forEach((item) => {
-        const itemContainer = document.createElement('div');
-        itemContainer.style.position = 'relative';
-        itemContainer.style.aspectRatio = '1/1';
-        itemContainer.style.overflow = 'hidden';
-        
-        if (item.imageUrl) {
-          const img = document.createElement('img');
-          img.src = item.imageUrl;
-          img.style.width = '100%';
-          img.style.height = '100%';
-          img.style.objectFit = 'cover';
-          itemContainer.appendChild(img);
-        } else {
-          const fallback = document.createElement('div');
-          fallback.style.width = '100%';
-          fallback.style.height = '100%';
-          fallback.style.display = 'flex';
-          fallback.style.alignItems = 'center';
-          fallback.style.justifyContent = 'center';
-          fallback.style.background = document.documentElement.classList.contains('dark')
-            ? 'linear-gradient(to bottom right, #1f2937, #111827)'
-            : 'linear-gradient(to bottom right, #e5e7eb, #d1d5db)';
-          
-          const fallbackText = document.createElement('span');
-          fallbackText.textContent = t('collage.noImage');
-          fallbackText.style.color = document.documentElement.classList.contains('dark')
-            ? '#6b7280'
-            : '#9ca3af';
-          fallbackText.style.fontSize = '14px';
-          
-          fallback.appendChild(fallbackText);
-          itemContainer.appendChild(fallback);
-        }
-        
-        if (showTitles || showPlayCount) {
-          const textOverlay = document.createElement('div');
-          textOverlay.style.position = 'absolute';
-          textOverlay.style.bottom = '0';
-          textOverlay.style.left = '0';
-          textOverlay.style.width = '100%';
-          textOverlay.style.padding = '12px 8px 8px';
-          textOverlay.style.background = 'linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.6) 70%, transparent)';
-          textOverlay.style.color = 'white';
-          textOverlay.style.textAlign = 'center';
-          
-          if (showTitles) {
-            const itemTitle = document.createElement('p');
-            itemTitle.textContent = item.name;
-            itemTitle.style.fontWeight = 'bold';
-            itemTitle.style.fontSize = '12px';
-            itemTitle.style.margin = '0';
-            itemTitle.style.padding = '0';
-            itemTitle.style.whiteSpace = 'nowrap';
-            itemTitle.style.overflow = 'hidden';
-            itemTitle.style.textOverflow = 'ellipsis';
-            textOverlay.appendChild(itemTitle);
-            
-            if (item.artist) {
-              const artist = document.createElement('p');
-              artist.textContent = `${t('common.by')} ${item.artist}`;
-              artist.style.fontSize = '10px';
-              artist.style.margin = '2px 0 0';
-              artist.style.padding = '0';
-              artist.style.opacity = '0.9';
-              artist.style.whiteSpace = 'nowrap';
-              artist.style.overflow = 'hidden';
-              artist.style.textOverflow = 'ellipsis';
-              textOverlay.appendChild(artist);
-            }
+      await downloadCollageImage(
+        collageRef as React.RefObject<HTMLDivElement>,
+        collageData,
+        {
+          showTitles,
+          showPlayCount,
+          showStyles,
+          locale,
+          dateString,
+          t: tFn,
+          formatNumber,
+          isDarkMode: document.documentElement.classList.contains('dark'),
+          compressionLevel: compressionLevel as 'high' | 'medium' | 'low' | 'ultraLow' | 'tiny'
+        },
+        {
+          onError: (err) => {
+            console.error('Error generating download:', err);
+            alert(t('errors.failedToGenerate'));
+          },
+          onComplete: () => {
+            setIsDownloading(false);
+            setDownloadProgress('');
+          },
+          onProgress: (message) => {
+            setDownloadProgress(message);
           }
-          
-          if (showPlayCount) {
-            const plays = document.createElement('p');
-            const formattedCount = formatNumber(item.playcount, locale);
-            
-            const keyPath = item.playcount === 1 ? 'pluralization.plays.one' : 'pluralization.plays.other';
-            plays.textContent = t(keyPath, { count: formattedCount });
-            
-            plays.style.fontSize = '10px';
-            plays.style.margin = showTitles ? '4px 0 0' : '0';
-            plays.style.padding = '0';
-            plays.style.opacity = '0.75';
-            textOverlay.appendChild(plays);
-          }
-          
-          itemContainer.appendChild(textOverlay);
         }
-        
-        gridDiv.appendChild(itemContainer);
-      });
-      
-      exportContainer.appendChild(gridDiv);
-      
-      if (showStyles) {
-        const footer = document.createElement('div');
-        footer.style.marginTop = '25px';
-        footer.style.textAlign = 'center';
-        footer.style.fontSize = '14px';
-        footer.style.color = document.documentElement.classList.contains('dark') ? '#9ca3af' : '#6b7280';
-        footer.style.position = 'relative';
-        footer.style.zIndex = '1';
-        
-        const footerText = document.createElement('p');
-        footerText.textContent = `${t('common.generatedWith')} `;
-        
-        // Create SVG logo element
-        const footerSvgLogo = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        footerSvgLogo.setAttribute('viewBox', '0 0 48 34');
-        footerSvgLogo.setAttribute('width', '16');
-        footerSvgLogo.setAttribute('height', '16');
-        footerSvgLogo.style.display = 'inline-block';
-        footerSvgLogo.style.verticalAlign = 'middle';
-        footerSvgLogo.style.marginRight = '4px';
-        
-        const footerLogoGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        footerLogoGroup.setAttribute('transform', 'translate(0, 0.5)');
-        
-        const footerPath1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        footerPath1.setAttribute('d', 'M16.0573 0H37.1389L21.6397 22.9729H0.558105L16.0573 0Z');
-        footerPath1.setAttribute('fill', '#6366F1');
-        
-        const footerPath2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        footerPath2.setAttribute('d', 'M16.9805 25.102L10.9773 34H33.0589L48.5581 11.0271H32.2605L22.7645 25.102H16.9805Z');
-        footerPath2.setAttribute('fill', '#8B5CF6');
-        
-        footerLogoGroup.appendChild(footerPath1);
-        footerLogoGroup.appendChild(footerPath2);
-        footerSvgLogo.appendChild(footerLogoGroup);
-        
-        footerText.appendChild(footerSvgLogo);
-        
-        const textNode = document.createTextNode(` Collage.fm • ${dateString}`);
-        footerText.appendChild(textNode);
-        
-        footer.appendChild(footerText);
-        exportContainer.appendChild(footer);
-      }
-      
-      exportWrapper.appendChild(exportContainer);
-      
-      const canvas = await html2canvas(exportContainer, {
-        useCORS: true,
-        scale: 2,
-        backgroundColor: document.documentElement.classList.contains('dark') ? '#111827' : '#f8fafc',
-        logging: false,
-        allowTaint: true
-      });
-      
-      document.body.removeChild(exportWrapper);
-      
-      const dataUrl = canvas.toDataURL('image/png');
-      
-      const link = document.createElement('a');
-      const filePrefix = showStyles ? 'styled-' : '';
-      link.download = `${filePrefix}${username}-${type}-${period}-${gridSize}.png`;
-      link.href = dataUrl;
-      link.click();
+      );
     } catch (err) {
       console.error('Error generating download:', err);
       alert(t('errors.failedToGenerate'));
-    } finally {
       setIsDownloading(false);
+      setDownloadProgress('');
     }
   };
 
@@ -378,6 +161,162 @@ export default function CollageContainer({
       </div>
     );
   }
+
+  const renderDownloadModal = () => (
+    <AnimatePresence>
+      {showDownloadModal && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={cancelDownload}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-xl max-w-md w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
+              {t('collage.downloadOptions')}
+            </h3>
+            
+            <div className="space-y-5 mb-6">
+              <div className="flex items-center justify-between">
+                <span className="text-gray-700 dark:text-gray-300">{t('collage.showTitles')}</span>
+                <div className="relative inline-block w-10 align-middle select-none">
+                  <input 
+                    type="checkbox" 
+                    id="showTitles" 
+                    checked={showTitles}
+                    onChange={() => setShowTitles(!showTitles)}
+                    className="sr-only"
+                  />
+                  <label 
+                    htmlFor="showTitles" 
+                    className={`block overflow-hidden h-6 rounded-full cursor-pointer transition-colors duration-200 ease-in-out ${showTitles ? 'bg-indigo-500' : 'bg-gray-300 dark:bg-gray-600'}`}
+                  >
+                    <span 
+                      className={`block h-6 w-6 rounded-full bg-white shadow transform transition-transform duration-200 ease-in-out ${showTitles ? 'translate-x-4' : 'translate-x-0'}`} 
+                    />
+                  </label>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <span className="text-gray-700 dark:text-gray-300">{t('collage.showPlayCount')}</span>
+                <div className="relative inline-block w-10 align-middle select-none">
+                  <input 
+                    type="checkbox" 
+                    id="showPlayCount" 
+                    checked={showPlayCount}
+                    onChange={() => setShowPlayCount(!showPlayCount)}
+                    className="sr-only"
+                  />
+                  <label 
+                    htmlFor="showPlayCount" 
+                    className={`block overflow-hidden h-6 rounded-full cursor-pointer transition-colors duration-200 ease-in-out ${showPlayCount ? 'bg-indigo-500' : 'bg-gray-300 dark:bg-gray-600'}`}
+                  >
+                    <span 
+                      className={`block h-6 w-6 rounded-full bg-white shadow transform transition-transform duration-200 ease-in-out ${showPlayCount ? 'translate-x-4' : 'translate-x-0'}`} 
+                    />
+                  </label>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <span className="text-gray-700 dark:text-gray-300">{t('collage.showStyles')}</span>
+                <div className="relative inline-block w-10 align-middle select-none">
+                  <input 
+                    type="checkbox" 
+                    id="showStyles" 
+                    checked={showStyles}
+                    onChange={() => setShowStyles(!showStyles)}
+                    className="sr-only"
+                  />
+                  <label 
+                    htmlFor="showStyles" 
+                    className={`block overflow-hidden h-6 rounded-full cursor-pointer transition-colors duration-200 ease-in-out ${showStyles ? 'bg-indigo-500' : 'bg-gray-300 dark:bg-gray-600'}`}
+                  >
+                    <span 
+                      className={`block h-6 w-6 rounded-full bg-white shadow transform transition-transform duration-200 ease-in-out ${showStyles ? 'translate-x-4' : 'translate-x-0'}`} 
+                    />
+                  </label>
+                </div>
+              </div>
+              
+              <div className="mt-4">
+                <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('collage.compressionLevel')}</h4>
+                <Select 
+                  value={compressionLevel} 
+                  onValueChange={setCompressionLevel}
+                >
+                  <SelectTrigger className="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-md shadow-sm h-10 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <SelectValue placeholder={t('collage.compressionLevel')} />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-md">
+                    <SelectItem value="high" className="text-sm hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{t('collage.compressionHigh')} - {t('collage.bestQuality')}</SelectItem>
+                    <SelectItem value="medium" className="text-sm hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{t('collage.compressionMedium')} - {t('collage.balanced')}</SelectItem>
+                    <SelectItem value="low" className="text-sm hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{t('collage.compressionLow')} - {t('collage.smallerFile')}</SelectItem>
+                    <SelectItem value="ultraLow" className="text-sm hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{t('collage.compressionUltraLow')} - {t('collage.verySmallFile')}</SelectItem>
+                    <SelectItem value="tiny" className="text-sm hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{t('collage.compressionTiny')} - {t('collage.minimumSize')}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            
+            <div className="flex space-x-3">
+              <Button
+                onClick={cancelDownload}
+                variant="outline"
+                className="flex-1 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                {t('common.cancel')}
+              </Button>
+              <Button
+                onClick={processDownload}
+                className="flex-1 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white"
+              >
+                {t('common.apply')}
+              </Button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+
+  const renderProgressOverlay = () => (
+    <AnimatePresence>
+      {isDownloading && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center"
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-xl max-w-sm w-full text-center"
+          >
+            <div className="flex flex-col items-center justify-center space-y-4">
+              <div className="w-16 h-16 border-4 border-t-indigo-500 border-r-indigo-300 border-b-indigo-200 border-l-indigo-400 rounded-full animate-spin"></div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                {t('common.downloading')}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                {downloadProgress || t('common.processing')}
+              </p>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 
   return (
     <motion.div 
@@ -442,106 +381,8 @@ export default function CollageContainer({
         </div>
       </motion.div>
 
-      <AnimatePresence>
-        {showDownloadModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            onClick={cancelDownload}
-          >
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-xs w-full overflow-hidden border border-gray-100 dark:border-gray-700"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-4">
-                <h3 className="text-white text-lg font-medium">{t('collage.downloadOptions.title')}</h3>
-                <p className="text-indigo-100 text-sm">{t('collage.downloadOptions.subtitle')}</p>
-              </div>
-              
-              <div className="p-5 space-y-4">
-                <div className="space-y-3">
-                  <label className="flex items-center space-x-3 text-gray-700 dark:text-gray-200 cursor-pointer p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors select-none">
-                    <div className={`w-5 h-5 border-2 rounded flex items-center justify-center ${showTitles ? 'border-indigo-500 bg-indigo-500/10' : 'border-gray-300 dark:border-gray-600'}`}>
-                      {showTitles && (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-indigo-600 dark:text-indigo-400" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      )}
-                    </div>
-                    <input 
-                      type="checkbox" 
-                      className="sr-only" 
-                      checked={showTitles} 
-                      onChange={() => setShowTitles(!showTitles)} 
-                    />
-                    <span>{t('collage.downloadOptions.showTitle')}</span>
-                  </label>
-                  
-                  <label className="flex items-center space-x-3 text-gray-700 dark:text-gray-200 cursor-pointer p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors select-none">
-                    <div className={`w-5 h-5 border-2 rounded flex items-center justify-center ${showPlayCount ? 'border-indigo-500 bg-indigo-500/10' : 'border-gray-300 dark:border-gray-600'}`}>
-                      {showPlayCount && (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-indigo-600 dark:text-indigo-400" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      )}
-                    </div>
-                    <input 
-                      type="checkbox" 
-                      className="sr-only" 
-                      checked={showPlayCount} 
-                      onChange={() => setShowPlayCount(!showPlayCount)} 
-                    />
-                    <span>{t('collage.downloadOptions.showPlayCount')}</span>
-                  </label>
-                  
-                  <label className="flex items-center space-x-3 text-gray-700 dark:text-gray-200 cursor-pointer p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors select-none">
-                    <div className={`w-5 h-5 border-2 rounded flex items-center justify-center ${showStyles ? 'border-indigo-500 bg-indigo-500/10' : 'border-gray-300 dark:border-gray-600'}`}>
-                      {showStyles && (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-indigo-600 dark:text-indigo-400" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      )}
-                    </div>
-                    <input 
-                      type="checkbox" 
-                      className="sr-only" 
-                      checked={showStyles} 
-                      onChange={() => setShowStyles(!showStyles)} 
-                    />
-                    <span>{t('collage.downloadOptions.showStyles')}</span>
-                  </label>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-3 pt-2">
-                  <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="py-2 rounded-lg text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 font-medium text-sm transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer"
-                    onClick={cancelDownload}
-                  >
-                    {t('common.cancel')}
-                  </motion.button>
-                  
-                  <motion.button
-                    whileHover={{ scale: 1.03, boxShadow: "0 10px 15px -3px rgba(99, 102, 241, 0.3)" }}
-                    whileTap={{ scale: 0.97 }}
-                    className="py-2 rounded-lg text-white font-medium text-sm bg-gradient-to-r from-indigo-500 to-purple-600 transition-all duration-200 shadow-md cursor-pointer"
-                    onClick={processDownload}
-                  >
-                    {t('collage.downloadOptions.applyDownload')}
-                  </motion.button>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {renderDownloadModal()}
+      {renderProgressOverlay()}
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}

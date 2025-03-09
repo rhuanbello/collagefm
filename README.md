@@ -82,6 +82,30 @@ Collage.fm supports multiple languages:
 
 The application automatically detects your browser's language preference, but you can manually switch languages using the language selector in the UI.
 
+## Code Architecture
+
+The application follows modern React best practices with a focus on component modularity and separation of concerns:
+
+- **Components**: UI elements organized by functionality
+- **Hooks**: Custom React hooks for shared logic
+- **Utils**: Utility functions including image processing
+- **Lib**: Core functionality and API integrations
+
+### Image Download Module
+
+The image download functionality has been optimized for:
+
+- **Performance**: Efficient DOM manipulation and rendering
+- **Modularity**: Broken down into smaller, focused functions
+- **Image Optimization**: Compression to reduce file size while maintaining quality
+- **Customization**: Options for styling, titles, and play count display
+
+The image generation and download process:
+1. Creates a virtual DOM structure with the collage content
+2. Renders it to a canvas using html2canvas-pro
+3. Applies image compression and optimization
+4. Generates a downloadable PNG file
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
