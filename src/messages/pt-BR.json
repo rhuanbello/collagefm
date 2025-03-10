@@ -255,17 +255,13 @@
     "showTitles": "Mostrar títulos",
     "showPlayCount": "Mostrar contagem de reproduções",
     "showStyles": "Mostrar estilos",
-    "compressionLevel": "Nível de Compressão",
+    "compressionLevel": "Nível de Qualidade",
     "compressionHigh": "Alta Qualidade",
-    "compressionMedium": "Média",
+    "compressionNormal": "Normal",
     "compressionLow": "Baixa",
-    "compressionUltraLow": "Ultra Baixa",
-    "compressionTiny": "Mínima",
     "bestQuality": "Melhor qualidade mas arquivo maior",
     "balanced": "Qualidade e tamanho equilibrados",
-    "smallerFile": "Tamanho de arquivo menor (~500KB)",
-    "verySmallFile": "Arquivo muito pequeno (~300KB)",
-    "minimumSize": "Tamanho mínimo de arquivo (~100KB)"
+    "smallerFile": "Arquivo menor"
   },
   "errors": {
     "invalidUsername": "Nome de usuário do Last.fm inválido",

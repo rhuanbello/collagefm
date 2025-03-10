@@ -40,11 +40,9 @@ interface CompressionOptions {
  * Default aggressive compression options for various size targets
  */
 const COMPRESSION_PRESETS = {
-  high: { quality: 0.8, format: 'image/jpeg' as const, maxWidth: 2400 },
-  medium: { quality: 0.6, format: 'image/jpeg' as const, maxWidth: 1800 },
-  low: { quality: 0.4, format: 'image/jpeg' as const, maxWidth: 1200 },
-  ultraLow: { quality: 0.2, format: 'image/jpeg' as const, maxWidth: 1000 },
-  tiny: { quality: 0.1, format: 'image/jpeg' as const, maxWidth: 800 },
+  high: { quality: 1.0, format: 'image/png' as const },
+  normal: { quality: 0.8, format: 'image/jpeg' as const, maxWidth: 2400 },
+  low: { quality: 0.6, format: 'image/jpeg' as const, maxWidth: 1800 },
 };
 
 /**
@@ -383,7 +381,7 @@ function createFooter(options: DownloadOptions): HTMLElement {
  */
 async function compressImage(
   dataUrl: string, 
-  options: CompressionOptions = COMPRESSION_PRESETS.medium
+  options: CompressionOptions = COMPRESSION_PRESETS.normal
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -551,8 +549,8 @@ export async function downloadCollageImage(
         compressionOptions = options.compressionLevel;
       }
     } else {
-      // Default to medium compression
-      compressionOptions = COMPRESSION_PRESETS.low;
+      // Default to normal compression
+      compressionOptions = COMPRESSION_PRESETS.normal;
     }
     
     // Compress the image

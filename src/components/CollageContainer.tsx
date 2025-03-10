@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Confetti } from '@/components/ui/confetti';
 import Link from 'next/link';
 import { BuyMeACoffeeButton } from '@/components/ui/buy-me-a-coffee';
+import { BorderBeam } from './ui/border-beam';
 interface CollageItem {
   name: string;
   artist?: string;
@@ -56,7 +57,7 @@ export default function CollageContainer({
   const [showTitles, setShowTitles] = useState(true);
   const [showPlayCount, setShowPlayCount] = useState(true);
   const [showStyles, setShowStyles] = useState(true);
-  const [compressionLevel, setCompressionLevel] = useState<string>('low');
+  const [compressionLevel, setCompressionLevel] = useState<string>('normal');
   const [downloadProgress, setDownloadProgress] = useState<string>('');
   const [showConfetti, setShowConfetti] = useState(false);
 
@@ -116,7 +117,7 @@ export default function CollageContainer({
           t: tFn,
           formatNumber,
           isDarkMode: document.documentElement.classList.contains('dark'),
-          compressionLevel: compressionLevel as 'high' | 'medium' | 'low' | 'ultraLow' | 'tiny'
+          compressionLevel: compressionLevel as 'high' | 'normal' | 'low'
         },
         {
           onError: (err) => {
@@ -267,10 +268,8 @@ export default function CollageContainer({
                   </SelectTrigger>
                   <SelectContent className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-md">
                     <SelectItem value="high" className="text-sm hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{t('collage.compressionHigh')} - {t('collage.bestQuality')}</SelectItem>
-                    <SelectItem value="medium" className="text-sm hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{t('collage.compressionMedium')} - {t('collage.balanced')}</SelectItem>
+                    <SelectItem value="normal" className="text-sm hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{t('collage.compressionNormal')} - {t('collage.balanced')}</SelectItem>
                     <SelectItem value="low" className="text-sm hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{t('collage.compressionLow')} - {t('collage.smallerFile')}</SelectItem>
-                    <SelectItem value="ultraLow" className="text-sm hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{t('collage.compressionUltraLow')} - {t('collage.verySmallFile')}</SelectItem>
-                    <SelectItem value="tiny" className="text-sm hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{t('collage.compressionTiny')} - {t('collage.minimumSize')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -410,8 +409,22 @@ export default function CollageContainer({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="backdrop-blur-md bg-white/30 dark:bg-gray-900/30 rounded-2xl overflow-hidden border border-gray-200/50 dark:border-gray-700/30 shadow-xl"
+          className="backdrop-blur-md bg-white/30 dark:bg-gray-900/30 overflow-hidden border border-gray-200/50 dark:border-gray-700/30 shadow-xl"
         >
+          <BorderBeam 
+            duration={6}
+            delay={6}
+            size={1000}
+            className="from-transparent via-indigo-600 to-transparent"  
+          />
+
+          <BorderBeam 
+            duration={6}
+            delay={3}
+            size={1000}
+            className="from-transparent via-purple-600 to-transparent"  
+          />
+
           <div className="p-1">
             <div 
               ref={collageRef} 
@@ -525,16 +538,15 @@ interface MusicCollageJsonLdProps {
 }
 
 export function MusicCollageJsonLd({ username, period, type, items }: MusicCollageJsonLdProps) {
-  // Early return if we don't have data
-  if (!items || items.length === 0) return null;
-  
-  // Use React's useEffect to render the JSON-LD on client-side only
   const [mounted, setMounted] = useState(false);
   
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // Early return if we don't have data
+  if (!items || items.length === 0) return null;
+  
   // Get formatted time period for display
   const getPeriodName = (period: string): string => {
     switch(period) {
