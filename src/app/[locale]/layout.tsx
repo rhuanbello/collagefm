@@ -4,11 +4,10 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { locales, Locale, getMessages } from "@/lib/i18n";
 
-type Params = Promise<{ locale: string }>;
+type Params = { locale: string };
 
-export async function generateMetadata({ params }: { params: Params }) {
+export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const { locale } = await params;
-  
   
   if (!locales.includes(locale as Locale)) {
     notFound();
@@ -27,10 +26,9 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Params;
+  params: Promise<Params>;
 }) {
   const { locale } = await params;
-  
   
   if (!locales.includes(locale as Locale)) {
     notFound();
@@ -40,11 +38,15 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC" now={new Date()}>
-      <div className="fixed top-4 right-4 z-50 flex items-center gap-3">
+      <div className="absolute top-4 left-4 z-40 md:z-50 md:right-16 md:left-auto">
         <LanguageSwitcher />
+      </div>
+      <div className="absolute top-4 right-4 z-40 md:z-50">
         <ThemeToggle />
       </div>
-      {children}
+      <main>
+        {children}
+      </main>
     </NextIntlClientProvider>
   );
 } 

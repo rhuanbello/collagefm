@@ -161,11 +161,18 @@ export default async function CollagePage({
   }
 
   try {
-    // Restore the original API call logic
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/generate?username=${encodeURIComponent(username)}&period=${period}&gridSize=${gridSize}&type=${type}`,
-      { next: { revalidate } }
-    );
+    const pathname = '/api/generate';
+    const searchParams = new URLSearchParams({
+      username: encodeURIComponent(username),
+      period: period,
+      gridSize: gridSize,
+      type: type,
+    });
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const url = `${baseUrl}${pathname}?${searchParams.toString()}`;
+
+    const res = await fetch(url, { next: { revalidate } });
+    console.log("Cache Status:", res.headers.get("x-nextjs-cache"));
 
     if (!res.ok) {
       if (res.status === 404) {
@@ -229,7 +236,7 @@ export default async function CollagePage({
             </div>
           </div>
         }>
-          <div className="relative z-10 py-8">
+          <div className="relative z-10">
             <CollageContainer 
               initialData={collageData}
               gridSize={gridSize}
@@ -239,7 +246,6 @@ export default async function CollagePage({
           </div>
         </Suspense>
         
-        {/* Add structured data */}
         <MusicCollageJsonLd
           username={username}
           period={period}

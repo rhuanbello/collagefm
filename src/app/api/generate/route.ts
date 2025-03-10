@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
     
     return NextResponse.json(data);
   } catch (error: unknown) {
-    console.error('API error:', error);
+    console.log('API error:', error);
     
     
     if (error instanceof Error && error.message === 'User not found') {

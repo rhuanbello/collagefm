@@ -4,9 +4,8 @@ import { useTranslations } from 'next-intl';
 import CollageForm from '@/components/CollageForm';
 import { Logo } from '@/components/svg/Logo';
 import Link from 'next/link';
-import { BuyMeCoffeeButton } from '@/components/ui/buy-me-a-coffe';
+import { BuyMeACoffeeButton } from '@/components/ui/buy-me-a-coffee';
 import { BorderBeam } from '@/components/ui/border-beam';
-
 
 export default function Home() {
   const t = useTranslations();
@@ -19,10 +18,8 @@ export default function Home() {
         <div className="absolute -bottom-40 left-20 w-80 h-80 bg-blue-500/10 dark:bg-blue-600/20 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl animate-blob animation-delay-4000" aria-hidden="true"></div>
       </div>
       
-      <BuyMeCoffeeButton text={t('home.footer.buyMeACoffee')} />
-      
       <header className="text-center mb-8 relative z-10">
-        <div className="flex items-center justify-center mb-2">
+        <div className="flex items-center justify-center mb-2 mt-4">
           <Logo aria-hidden="true" />
           <h1 className="text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 px-2 py-1 leading-relaxed">
             {t('common.collagefm')}
@@ -75,18 +72,20 @@ export default function Home() {
         >
           {t('home.cta')}
         </Link>
-      </section> */}
+        </section> */}
       
-      <footer className="mt-16 text-center text-sm text-gray-600 dark:text-gray-400 relative z-10 max-w-md mx-auto">
+      <footer className="mt-4 md:mt-16 text-center text-sm text-gray-600 dark:text-gray-400 relative z-10 max-w-md mx-auto">
+        <BuyMeACoffeeButton text={t('home.footer.buyMeACoffee')} />
+
         <p className="mb-2">
-          {t('home.footer.builtWith')} <a href="https://last.fm/user/rhuanbello" target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 hover:underline">Rhuan Bello</a>
+          {t('home.footer.builtWith')} <a href="https://last.fm/user/rhuanbello" target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 hover:underline">@rhuanbello</a>
         </p>
         
         <p>
           <a 
             href="https://github.com/rhuanbello/collagefm"
             target="_blank" 
-            rel="noopener noreferrer"
+            rel="noopener noreferrer" 
             className="inline-flex items-center gap-1 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors"
             aria-label="View source code on GitHub"
           >
@@ -103,6 +102,7 @@ export default function Home() {
           <Link href="/sitemap.xml" className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">{t('home.footer.menu.sitemap')}</Link>
         </p>
       </footer>
+
     </main>
   );
 } 

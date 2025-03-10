@@ -20,10 +20,6 @@ interface LanguageOption {
   flag: React.ReactNode;
 }
 
-
-
-
-
 export function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
@@ -48,13 +44,9 @@ export function LanguageSwitcher() {
   
   
   const handleLanguageChange = (newLocale: string) => {
-    
-    
-    
     const pathSegments = pathname.split('/').filter(Boolean);
     const firstSegment = pathSegments[0] || '';
     const isFirstSegmentLocale = locales.includes(firstSegment as Locale);
-    
     
     let pathWithoutLocale = '';
     if (isFirstSegmentLocale) {
@@ -63,22 +55,16 @@ export function LanguageSwitcher() {
       pathWithoutLocale = pathname;
     }
     
-    
     if (pathWithoutLocale === '') {
       pathWithoutLocale = '/';
     }
     
-    
     const url = new URL(window.location.href);
     const searchParams = url.search; 
     
-    
-    
     const newPath = `/${newLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}${searchParams}`;
     
-    
     document.cookie = `NEXT_LOCALE=${newLocale}; max-age=${365 * 24 * 60 * 60}; path=/`;
-    
     
     router.push(newPath);
   };

@@ -201,8 +201,6 @@ export default function CollageForm() {
                 </FormItem>
               )}
             />
-
-
           </motion.div>
 
           <motion.div 
@@ -222,7 +220,7 @@ export default function CollageForm() {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="bg-white/70 dark:bg-gray-800/70 border-0 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 h-11 rounded-xl text-gray-800 dark:text-gray-200">
+                      <SelectTrigger className="w-full bg-white/70 dark:bg-gray-800/70 border-0 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 h-11 rounded-xl text-gray-800 dark:text-gray-200">
                         <SelectValue placeholder={t('form.type.label')} className="text-gray-800 dark:text-gray-200" />
                       </SelectTrigger>
                     </FormControl>
@@ -253,7 +251,7 @@ export default function CollageForm() {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="bg-white/70 dark:bg-gray-800/70 border-0 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 h-11 rounded-xl text-gray-800 dark:text-gray-200">
+                      <SelectTrigger className="w-full bg-white/70 dark:bg-gray-800/70 border-0 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 h-11 rounded-xl text-gray-800 dark:text-gray-200">
                         <SelectValue placeholder={t('form.period.label')} className="text-gray-800 dark:text-gray-200" />
                       </SelectTrigger>
                     </FormControl>
@@ -289,7 +287,7 @@ export default function CollageForm() {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="bg-white/70 dark:bg-gray-800/70 border-0 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 h-11 rounded-xl text-gray-800 dark:text-gray-200">
+                      <SelectTrigger className="w-full bg-white/70 dark:bg-gray-800/70 border-0 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 h-11 rounded-xl text-gray-800 dark:text-gray-200">
                         <SelectValue placeholder={t('form.gridSize.label')} className="text-gray-800 dark:text-gray-200" />
                       </SelectTrigger>
                     </FormControl>

@@ -8,7 +8,7 @@
     "by": "por",
     "plays": "reproduções",
     "generatedWith": "Gerado com",
-    "apply": "Aplicar",
+    "apply": "Baixar",
     "cancel": "Cancelar",
     "loading": "Carregando...",
     "processing": "Processando...",
@@ -37,7 +37,7 @@
     "title": "Collage.fm",
     "cta": "Gere sua colagem",
     "footer": {
-      "buyMeACoffee": "Compre-me um café",
+      "buyMeACoffee": "Me compre um café",
       "builtWith": "Desenvolvido com Next.js e a API do Last.fm por",
       "viewOnGitHub": "Ver no GitHub",
       "copyright": "© {year} Collage.fm. Todos os direitos reservados.",
