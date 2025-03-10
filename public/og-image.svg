@@ -1,49 +1,11 @@
-<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1E293B" />
-      <stop offset="100%" stop-color="#0F172A" />
-    </linearGradient>
-    <linearGradient id="text-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#818CF8" />
-      <stop offset="100%" stop-color="#C084FC" />
-    </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="8" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
-  </defs>
-  
-  <!-- Background -->
-  <rect width="1200" height="630" fill="url(#bg-gradient)" />
-  
-  <!-- Decorative elements -->
-  <circle cx="300" cy="150" r="250" fill="#6366F1" opacity="0.08" />
-  <circle cx="900" cy="480" r="280" fill="#8B5CF6" opacity="0.08" />
-  
-  <!-- Logo and Title -->
-  <g transform="translate(250, 200)">
-    <!-- Stylized music note icon -->
-    <path d="M50,30 C50,30 50,220 50,220 C50,235 35,250 20,250 C5,250 -10,235 -10,220 C-10,205 5,190 20,190 C30,190 40,195 45,205 L45,60 L140,30 L140,170 C140,185 125,200 110,200 C95,200 80,185 80,170 C80,155 95,140 110,140 C120,140 130,145 135,155 L135,0 L50,30 Z" 
-          fill="url(#text-gradient)" filter="url(#glow)" />
-    
-    <!-- Collage.fm title -->
-    <text x="170" y="130" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="url(#text-gradient)" filter="url(#glow)">Collage.fm</text>
-  </g>
-  
-  <!-- Tagline -->
-  <text x="600" y="380" font-family="Arial, sans-serif" font-size="32" font-weight="normal" fill="#E2E8F0" text-anchor="middle">Create beautiful music collages from your Last.fm</text>
-  
-  <!-- Album grid illustration -->
-  <g transform="translate(400, 430)">
-    <rect x="0" y="0" width="80" height="80" fill="#F472B6" opacity="0.9" rx="4" />
-    <rect x="90" y="0" width="80" height="80" fill="#818CF8" opacity="0.9" rx="4" />
-    <rect x="180" y="0" width="80" height="80" fill="#34D399" opacity="0.9" rx="4" />
-    <rect x="270" y="0" width="80" height="80" fill="#FBBF24" opacity="0.9" rx="4" />
-    
-    <rect x="0" y="90" width="80" height="80" fill="#60A5FA" opacity="0.9" rx="4" />
-    <rect x="90" y="90" width="80" height="80" fill="#F472B6" opacity="0.9" rx="4" />
-    <rect x="180" y="90" width="80" height="80" fill="#A78BFA" opacity="0.9" rx="4" />
-    <rect x="270" y="90" width="80" height="80" fill="#34D399" opacity="0.9" rx="4" />
-  </g>
-</svg> 
+<svg width="48" height="34" viewBox="0 0 48 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_4_2)">
+<path d="M15.4992 0H36.5808L21.0816 22.9729H0L15.4992 0Z" fill="#6366F1"/>
+<path d="M16.4224 25.102L10.4192 34H32.5008L48 11.0271H31.7024L22.2064 25.102H16.4224Z" fill="#8B5CF6"/>
+</g>
+<defs>
+<clipPath id="clip0_4_2">
+<rect width="48" height="34" fill="white"/>
+</clipPath>
+</defs>
+</svg>

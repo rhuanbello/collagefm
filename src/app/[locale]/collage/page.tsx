@@ -56,11 +56,11 @@ export async function generateMetadata({ params, searchParams }: {
         title,
         description,
         type: 'website',
-        url: `https://collagefm.vercel.app/${locale}/collage?username=${username}&type=${type}&period=${period}`,
+        url: `https://collagefm.com/${locale}/collage?username=${username}&type=${type}&period=${period}`,
         siteName: 'Collage.fm',
         images: [
           {
-            url: 'https://collagefm.vercel.app/og-image.png',
+            url: 'https://collagefm.com/og-image.png',
             width: 1200,
             height: 630,
             alt: `${username}'s Top ${type} Collage from ${periodText}`,
@@ -71,7 +71,7 @@ export async function generateMetadata({ params, searchParams }: {
         card: 'summary_large_image',
         title,
         description,
-        images: ['https://collagefm.vercel.app/og-image.png'],
+        images: ['https://collagefm.com/og-image.png'],
         creator: '@rhuanbello',
       },
     };
@@ -83,13 +83,13 @@ export async function generateMetadata({ params, searchParams }: {
     description: messages.meta.description,
     openGraph: {
       type: 'website',
-      url: `https://collagefm.vercel.app/${locale}/collage`,
+      url: `https://collagefm.com/${locale}/collage`,
       title: messages.meta.title,
       description: messages.meta.description,
       siteName: 'Collage.fm',
       images: [
         {
-          url: 'https://collagefm.vercel.app/og-image.png',
+          url: 'https://collagefm.com/og-image.png',
           width: 1200,
           height: 630,
           alt: 'Collage.fm - Create beautiful music collages from your Last.fm profile',
@@ -100,7 +100,7 @@ export async function generateMetadata({ params, searchParams }: {
       card: 'summary_large_image',
       title: messages.meta.title,
       description: messages.meta.description,
-      images: ['https://collagefm.vercel.app/og-image.png'],
+      images: ['https://collagefm.com/og-image.png'],
       creator: '@rhuanbello',
     },
   };

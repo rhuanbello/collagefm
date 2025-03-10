@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: 'Create Last.fm Music Collages | Collage.fm',
   description: 'Generate beautiful personalized collages of your top artists and albums from Last.fm. Create and share your music taste visually.',
-  metadataBase: new URL('https://collagefm.vercel.app'),
+  metadataBase: new URL('https://collagefm.com'),
   keywords: ['last.fm', 'music collage', 'album collage', 'lastfm collage', 'music visualization', 'album artwork'],
   authors: [{ name: 'Rhuan Bello' }],
   creator: 'Rhuan Bello',
@@ -25,13 +25,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://collagefm.vercel.app',
+    url: 'https://collagefm.com',
     title: 'Create Last.fm Music Collages | Collage.fm',
     description: 'Generate beautiful personalized collages of your top artists and albums from Last.fm. Create and share your music taste visually.',
     siteName: 'Collage.fm',
     images: [
       {
-        url: 'https://collagefm.vercel.app/og-image.png',
+        url: 'https://collagefm.com/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Collage.fm - Create beautiful music collages from your Last.fm profile',
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Create Last.fm Music Collages | Collage.fm',
     description: 'Generate beautiful personalized collages of your top artists and albums from Last.fm.',
-    images: ['https://collagefm.vercel.app/og-image.png'],
+    images: ['https://collagefm.com/og-image.png'],
     creator: '@rhuanbello',
   },
   robots: {
