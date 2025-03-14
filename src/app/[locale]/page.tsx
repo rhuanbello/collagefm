@@ -42,38 +42,6 @@ export default function Home() {
         />
       </section>
       
-      {/* <section className="mt-12 text-center max-w-2xl mx-auto relative z-10">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6">Why Use Collage.fm?</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-4">
-            <h3 className="text-lg font-semibold text-indigo-600 dark:text-indigo-400 mb-2">Beautiful Collages</h3>
-            <p className="text-gray-600 dark:text-gray-400">Create stunning visualizations of your music listening habits with customizable layouts.</p>
-          </div>
-          <div className="p-4">
-            <h3 className="text-lg font-semibold text-indigo-600 dark:text-indigo-400 mb-2">Easy Sharing</h3>
-            <p className="text-gray-600 dark:text-gray-400">Download and share your music collages on social media to show off your music taste.</p>
-          </div>
-          <div className="p-4">
-            <h3 className="text-lg font-semibold text-indigo-600 dark:text-indigo-400 mb-2">Last.fm Integration</h3>
-            <p className="text-gray-600 dark:text-gray-400">Seamlessly connects with your Last.fm account to pull your listening data.</p>
-          </div>
-        </div>
-      </section> */}
-      
-      {/* <section className="mt-12 text-center relative z-10">
-        <h2 className="sr-only">Get Started</h2>
-        <Link 
-          href="#collage-form" 
-          className="inline-flex items-center px-6 py-3 bg-indigo-600 dark:bg-indigo-500 text-white rounded-full hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors"
-          onClick={(e) => {
-            e.preventDefault();
-            document.querySelector('.w-full.max-w-md')?.scrollIntoView({behavior: 'smooth'});
-          }}
-        >
-          {t('home.cta')}
-        </Link>
-        </section> */}
-      
       <footer className="mt-4 md:mt-16 text-center text-sm text-gray-600 dark:text-gray-400 relative z-10 max-w-md mx-auto">
         <BuyMeACoffeeButton text={t('home.footer.buyMeACoffee')} />
 

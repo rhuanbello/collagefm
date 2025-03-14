@@ -15,9 +15,28 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
 
   const messages = await getMessages(locale as Locale);
   
+  const localePrefix = locale === 'en' ? '' : `/${locale}`;
+  
   return {
     title: messages.meta.title,
     description: messages.meta.description,
+    openGraph: {
+      title: messages.meta.title,
+      description: messages.meta.description,
+      locale: locale === 'pt-BR' ? 'pt_BR' : 'en_US',
+      url: `https://collagefm.com${localePrefix}`,
+    },
+    twitter: {
+      title: messages.meta.title,
+      description: messages.meta.description,
+    },
+    alternates: {
+      canonical: `https://collagefm.com${localePrefix}`,
+      languages: {
+        'en': 'https://collagefm.com',
+        'pt-BR': 'https://collagefm.com/pt-BR',
+      }
+    }
   };
 }
 

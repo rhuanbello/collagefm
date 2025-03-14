@@ -77,7 +77,8 @@ export default function AboutPage() {
             {t('creator.description1')}
           </p>
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-            {t('creator.description2').replace('GitHub', '')}
+            {t('creator.description2')}
+            {' '}
             <a href="https://github.com/rhuanbello/collagefm" target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 hover:underline">
               GitHub
             </a>

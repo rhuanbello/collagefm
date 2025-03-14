@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Collage.fm - Crie suas colagens musicais do Last.fm",
-    "description": "Gere belas colagens dos seus artistas e álbuns favoritos do Last.fm."
+    "title": "Last.fm Collage Generator",
+    "description": "Gere belas colagens personalizadas dos seus artistas e álbuns favoritos com os scrobbles do Last.fm. Crie e compartilhe seu gosto musical no Instagram e Twitter."
   },
   "common": {
     "collagefm": "Collage.fm",
@@ -122,7 +122,7 @@
     },
     "creator": {
       "title": "Sobre o Criador",
-      "description1": "um desenvolvedor web e entusiasta de música. Após usar ferramentas similares no passado, Rhuan decidiu criar uma versão moderna e amigável com recursos adicionais e melhor desempenho.",
+      "description1": "um desenvolvedor web e entusiasta de música. Após usar ferramentas similares no passado, Eu decidi criar uma versão moderna e amigável com recursos adicionais e melhor desempenho.",
       "description2": "O projeto é de código aberto e está disponível no GitHub. Contribuições, feedback e solicitações de recursos são bem-vindos!"
     },
     "buttons": {

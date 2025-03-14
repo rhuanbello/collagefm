@@ -11,6 +11,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { PERIOD_OPTIONS, GRID_SIZE_OPTIONS } from '@/lib/lastfm';
+import { sendGTMEvent } from '@next/third-parties/google'
+
 
 // Helper function to safely get translations
 const safeT = (t: ReturnType<typeof useTranslations>, key: string): string => {
@@ -99,6 +101,8 @@ export default function CollageForm() {
   
   // Form submission handler
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    sendGTMEvent({ event: 'generate_collage', value: { username: values.username, period: values.period, gridSize: values.gridSize, type: values.type } })
+    
     setIsLoading(true);
     setError(null);
 
