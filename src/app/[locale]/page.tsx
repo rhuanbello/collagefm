@@ -67,7 +67,6 @@ export default function Home() {
         <p className="mt-2">
           <Link href="/about" className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 mr-4">{t('home.footer.menu.about')}</Link>
           <Link href="/privacy" className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 mr-4">{t('home.footer.menu.privacy')}</Link>
-          <Link href="/sitemap.xml" className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">{t('home.footer.menu.sitemap')}</Link>
         </p>
       </footer>
 
